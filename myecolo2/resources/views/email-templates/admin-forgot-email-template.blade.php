@@ -5,7 +5,7 @@
     <title>Réinitialisation du mot de passe</title>
 </head>
 <body>
-    <p> Cher\ Chère {{ $admin ->first_name}}</p>
+    <p> Cher\ Chère {{ $admin->first_name }} {{ $admin->last_name }}</p>
     <p>
     Nous avons reçu une demande de réinitialisation du mot de passe pour le compte Myecolo associé à l'adresse {{ $admin->email }}. Si vous avez fait cette demande, veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe:
     <br><br><br>

@@ -110,4 +110,75 @@ class AdminController extends Controller{
         return redirect()->route('admin.forgot-password');
         }
     }
+
+    public function resetPassword(Request $request, $token = null){
+        $check_token = DB::table('password_reset_tokens')
+                        ->where(['token'=>$token, 'guard' =>constGuards:: ADMIN])
+                        ->first();
+        if ($check_token){
+            //check if token is not expired
+            $diffMins = Carbon::createFromFormat('Y-m-d H:i:s', $check_token->created_at)
+                        ->diffInMinutes(Carbon::now());
+
+            if($diffMins > constDefaults::tokenExpiredMinutes){
+                //If token expired
+                session()->flash('fail', 'Lien de réinitialisation du mot de passe expiré. Demandez un nouveau lien');
+                return redirect()->route('admin.forgot-password',['token'=>$token]);
+            }else{
+                return view('back.pages.admin.auth.reset-password')-> with(['token', $token]);
+            }
+
+        }else{
+            session()->flash('fail', 'Lien de réinitialisation du mot de passe invalide');
+            return redirect()->route('admin.forgot-password',['token'=>$token]);
+        }
+    }
+
+    public function resetPasswordHandler(Request $request){
+        $request->validate([
+            'new_password' => 'required|min:5|max:25|required_with:new_password_confirmation|
+            same:new_password_confirmation',
+            'new_password_confirmation' => 'required'
+        ]);
+
+        //if form validated get token
+        $token = DB::table('password_reset_tokens')
+                    ->where(['token'=>$request->token, 'guard' =>constGuards:: ADMIN])
+                    ->first();
+
+        //Get admin details
+        $admin = Admin::where('email', $token->email)->first();
+
+        //Update admin password
+        Admin::where('email', $admin->email)->update([
+            'password' =>Hash:: make($request->new_password)
+        ]);
+
+        //Delete token record
+        DB::table('password_reset_tokens')->where([
+            'email'=>$admin->email,
+            'token'=>$request->token,
+            'guard' =>constGuards:: ADMIN
+        ])->delete();
+
+        //send email to notify admin
+        $data = array(
+            'admin' => $admin,
+            'new_password' => $request->new_password
+        );
+
+        $mail_body = view('email-templates.admin-reset-email-template', $data)->render();
+
+        $mailConfig = array(
+            'mail_from_email' => env('EMAIL_FROM_ADDRESS'),
+            'mail_from_name' => env('EMAIL_FROM_NAME'),
+            'mail_recipient_email' => $admin -> email,
+            'mail_recipient_name' => $admin -> first_name . ' ' . $admin -> last_name,
+            'mail_subject' => 'Votre mot de passe a été réinitialisé',
+            'mail_body' => $mail_body
+        );
+
+        sendEmail($mailConfig);
+        return redirect()->route('admin.login')->with('success', 'Mot de passe réinitialisé avec succès. Utilisez le nouveau mot de passe pour se connecter');
+    }
 }
