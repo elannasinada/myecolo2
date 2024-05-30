@@ -1,9 +1,9 @@
 @extends('back.layout.auth-layout')
-@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Admin login')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Connexion administrateur')
 @section('content')
 <div class="login-box bg-white box-shadow border-radius-10">
     <div class="login-title">
-        <h2 class="text-center text-primary">Admin Login</h2>
+        <h2 class="text-center text-primary">Connexion administrateur</h2>
     </div>
     <form action="{{ route('admin.login_handler')}}" method="POST">
         @csrf
@@ -46,19 +46,19 @@
             <div class="col-6">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Remember</label>
+                    <label class="custom-control-label" for="customCheck1">Se souvenir</label>
                 </div>
             </div>
             <div class="col-6">
                 <div class="forgot-password">
-                    <a href="forgot-password.html">Forgot Password</a>
+                    <a href="{{route('admin.forgot-password')}}">Mot de passe oublié</a>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="input-group mb-0">
-                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Se connecter">
                     {{--<a class="btn btn-primary btn-lg btn-block" href="index.html">Sign In</a>--}}
                 </div>
             </div>
