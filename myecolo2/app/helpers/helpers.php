@@ -1,7 +1,9 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
 
 if(!function_exists('sendEmail')) {
     function sendEmail($mailConfig) {
@@ -20,8 +22,9 @@ if(!function_exists('sendEmail')) {
         $mail->Port = env('EMAIL_PORT');
 
         $mail->setFrom($mailConfig['mail_from_email'], $mailConfig['mail_from_name']);
-        $mail->addAddress($mailConfig['mail_from_name']);
+        $mail->addAddress($mailConfig['mail_recipient_email'], $mailConfig['mail_recipient_name']);
         $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8'; 
         $mail->Subject = $mailConfig['mail_subject'];
         $mail->Body = $mailConfig['mail_body'];
 
