@@ -484,219 +484,75 @@
         <div class="menu-block customscroll">
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-house"></span
+
+                    @if (Route::is('Admin.*'))
+                    <li>
+                        <a href="{{rounte('admin.home')}}" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-home"></span
                             ><span class="mtext">Accueil</span>
                         </a>
-                        <ul class="submenu">
-                            <li><a href="index.html">Tableau de bord style 1</a></li>
-                            <li><a href="index2.html">Tableau de bord style 2</a></li>
-                            <li><a href="index3.html">Tableau de bord style 3</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-textarea-resize"></span
-                            ><span class="mtext">Formulaires</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="form-basic.html">Formulaire de base</a></li>
-                            <li>
-                                <a href="advanced-components.html">Composants avancés</a>
-                            </li>
-                            <li><a href="form-wizard.html">Assistant de formulaire</a></li>
-                            <li><a href="html5-editor.html">Éditeur HTML5</a></li>
-                            <li><a href="form-pickers.html">Sélecteurs de formulaire</a></li>
-                            <li><a href="image-cropper.html">Recadrage d'image</a></li>
-                            <li><a href="image-dropzone.html">Zone de dépôt d'image</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-table"></span
-                            ><span class="mtext">Tables</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="basic-table.html">Tables de base</a></li>
-                            <li><a href="datatable.html">DataTables</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="calendar.html" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-calendar4-week"></span
-                            ><span class="mtext">Calendrier</span>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-archive"></span
-                            ><span class="mtext">Éléments d'interface utilisateur</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="ui-buttons.html">Boutons</a></li>
-                            <li><a href="ui-cards.html">Cartes</a></li>
-                            <li><a href="ui-cards-hover.html">Cartes survol</a></li>
-                            <li><a href="ui-modals.html">Modales</a></li>
-                            <li><a href="ui-tabs.html">Onglets</a></li>
-                            <li>
-                                <a href="ui-tooltip-popover.html">Info-bulle et Popover</a>
-                            </li>
-                            <li><a href="ui-sweet-alert.html">Sweet Alert</a></li>
-                            <li><a href="ui-notification.html">Notification</a></li>
-                            <li><a href="ui-timeline.html">Chronologie</a></li>
-                            <li><a href="ui-progressbar.html">Barre de progression</a></li>
-                            <li><a href="ui-typography.html">Typographie</a></li>
-                            <li><a href="ui-list-group.html">Groupe de listes</a></li>
-                            <li><a href="ui-range-slider.html">Curseur de plage</a></li>
-                            <li><a href="ui-carousel.html">Carrousel</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-command"></span
-                            ><span class="mtext">Icônes</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="bootstrap-icon.html">Icônes Bootstrap</a></li>
-                            <li><a href="font-awesome.html">Icônes FontAwesome</a></li>
-                            <li><a href="foundation.html">Icônes Foundation</a></li>
-                            <li><a href="ionicons.html">Icônes Ionicons</a></li>
-                            <li><a href="themify.html">Icônes Themify</a></li>
-                            <li><a href="custom-icon.html">Icônes personnalisées</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-pie-chart"></span
-                            ><span class="mtext">Graphiques</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="highchart.html">Highchart</a></li>
-                            <li><a href="knob-chart.html">jQuery Knob</a></li>
-                            <li><a href="jvectormap.html">jvectormap</a></li>
-                            <li><a href="apexcharts.html">Apexcharts</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-file-earmark-text"></span
-                            ><span class="mtext">Pages supplémentaires</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="video-player.html">Lecteur vidéo</a></li>
-                            <li><a href="login.html">Connexion</a></li>
-                            <li><a href="forgot-password.html">Mot de passe oublié</a></li>
-                            <li><a href="reset-password.html">Réinitialiser le mot de passe</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-bug"></span
-                            ><span class="mtext">Pages d'erreur</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="400.html">400</a></li>
-                            <li><a href="403.html">403</a></li>
-                            <li><a href="404.html">404</a></li>
-                            <li><a href="500.html">500</a></li>
-                            <li><a href="503.html">503</a></li>
-                        </ul>
                     </li>
 
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-back"></span
-                            ><span class="mtext">Pages supplémentaires</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="blank.html">Vide</a></li>
-                            <li><a href="contact-directory.html">Répertoire de contacts</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="blog-detail.html">Détail du blog</a></li>
-                            <li><a href="product.html">Produit</a></li>
-                            <li><a href="product-detail.html">Détail du produit</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="profile.html">Profil</a></li>
-                            <li><a href="gallery.html">Galerie</a></li>
-                            <li><a href="pricing-table.html">Tableaux de tarification</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-hdd-stack"></span
-                            ><span class="mtext">Menu multi-niveaux</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="javascript:;">Niveau 1</a></li>
-                            <li><a href="javascript:;">Niveau 1</a></li>
-                            <li><a href="javascript:;">Niveau 1</a></li>
-                            <li class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle">
-                                    <span class="micon fa fa-plug"></span
-                                    ><span class="mtext">Niveau 2</span>
-                                </a>
-                                <ul class="submenu child">
-                                    <li><a href="javascript:;">Niveau 2</a></li>
-                                    <li><a href="javascript:;">Niveau 2</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="javascript:;">Niveau 1</a></li>
-                            <li><a href="javascript:;">Niveau 1</a></li>
-                            <li><a href="javascript:;">Niveau 1</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="sitemap.html" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-diagram-3"></span
-                            ><span class="mtext">Plan du site</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="chat.html" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-chat-right-dots"></span
-                            ><span class="mtext">Chat</span>
-                        </a>
-                    </li>
                     <li>
                         <a href="invoice.html" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-receipt-cutoff"></span
-                            ><span class="mtext">Facture</span>
+                            ><span class="mtext">Factures</span>
                         </a>
                     </li>
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <div class="sidebar-small-cap">Supplémentaire</div>
+                        <div class="sidebar-small-cap">Paramètres</div>
                     </li>
-                    <li>
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-file-pdf"></span
-                            ><span class="mtext">Documentation</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="introduction.html">Introduction</a></li>
-                            <li><a href="getting-started.html">Pour commencer</a></li>
-                            <li><a href="color-settings.html">Paramètres de couleur</a></li>
-                            <li>
-                                <a href="third-party-plugins.html">Plugins tiers</a>
-                            </li>
-                        </ul>
-                    </li>
+
                     <li>
                         <a
-                            href="https://dropways.github.io/deskapp-free-single-page-website-template/"
+                            href=""
                             target="_blank"
                             class="dropdown-toggle no-arrow"
                         >
-                            <span class="micon bi bi-layout-text-window-reverse"></span>
+                            <span class="micon fa fa-user"></span>
                             <span class="mtext"
-                                    >Page d'accueil</span>
-                                    <img src="/back/vendors/images/coming-soon.png" alt="" width="25"
-                                /></span>
+                                    >Profil</span>
+                                    </span>
                             </a>
                         </li>
+                    @else
+                    <li>
+                        <a href="calendar.html" class="dropdown-toggle no-arrow">
+                            <span class="micon fa fa-home"></span
+                            ><span class="mtext">Accueil</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="invoice.html" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-receipt-cutoff"></span
+                            ><span class="mtext">Factures</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                        <div class="sidebar-small-cap">Paramètres</div>
+                    </li>
+
+                    <li>
+                        <a
+                            href=""
+                            target="_blank"
+                            class="dropdown-toggle no-arrow"
+                        >
+                            <span class="micon fa fa-user"></span>
+                            <span class="mtext"
+                                    >Profil</span>
+                                    </span>
+                            </a>
+                        </li>
+                    @endif
+
                     </ul>
                 </div>
             </div>
