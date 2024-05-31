@@ -47,6 +47,8 @@
 
         <!-- Include Toastr CSS -->
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+        <!-- Include ijaboCropTool CSS -->
         <link rel="stylesheet" type="text/css" href="/extra-assets/ijaboCropTool/ijaboCropTool.min.css" />
 
         @livewireStyles
@@ -64,17 +66,17 @@
 				</div>
 				<div class="login-menu">
 					<ul>
-                        
+
                         @if (!Route::is('admin.*'))
 						   <li><a href="register.html">S'inscrire</a></li>
-                            
+
                           @if (Route::is('seller.login'))
 						      <li><a href="{{ route('seller.register') }}">S'incrire</a></li>
 						  @else
 						      <li><a href="{{ route('seller.login') }}">Se connecter</a></li>
 						  @endif
-                         
-						       
+
+
                         @endif
 					</ul>
 				</div>
@@ -95,6 +97,8 @@
 			</div>
 		</div>
 		<!-- js -->
+        <!-- Include ijaboCropTool JS -->
+        <script src="/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
         <script src="/back/vendors/scripts/core.js"></script>
 		<script src="/back/vendors/scripts/script.min.js"></script>
 		<script src="/back/vendors/scripts/process.js"></script>
@@ -108,8 +112,8 @@
             }
         </script>
 
+        <!-- Include Toastr JS -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
         <script>
             @if(Session::has('message'))
                 toastr.options = {

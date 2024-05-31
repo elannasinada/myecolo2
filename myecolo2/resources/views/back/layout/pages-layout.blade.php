@@ -61,8 +61,11 @@
         <link rel="stylesheet" href=""/>
 
         <!-- Include Toastr CSS -->
-        <link rel="stylesheet" type="text/css" href="/extra-assets/ijaboCropTool/ijaboCropTool.min.css" />
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+        <!-- Include ijaboCropTool CSS -->
+        <link rel="stylesheet" type="text/css" href="/extra-assets/ijaboCropTool/ijaboCropTool.min.css" />
+
 
     @livewireStyles
     @stack('stylesheets')
@@ -510,9 +513,8 @@
             </div>
         </div>
         <!-- js -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
-        
+
         <script src="/back/vendors/scripts/core.js"></script>
         <script src="/back/vendors/scripts/script.min.js"></script>
         <script src="/back/vendors/scripts/process.js"></script>
@@ -522,9 +524,12 @@
                 history.pushState(null, null, document.URL);
                 window.addEventListener('popstate', function() {
                 history.pushState(null, null, document.URL);
-                });|
+                });
             }
         </script>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         @if(Session::has('message'))
             toastr.options = {
