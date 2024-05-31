@@ -58,8 +58,9 @@
 				</div>
 				<div class="login-menu">
 					<ul>
-
+                        
                         @if (!Route::is('admin.*'))
+						   <li><a href="register.html">S'inscrire</a></li>
                             
                           @if (Route::is('seller.login'))
 						      <li><a href="{{ route('seller.register') }}">S'incrire</a></li>
