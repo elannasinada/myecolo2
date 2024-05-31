@@ -43,4 +43,13 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getPictureAttribute($value) {
+        if( $value ){
+        return asset('/style_assets/img/users/admins/'.$value);
+        }else{
+        return asset('/style_assets/img/users/default-avatar.png');
+        }
+    }
+
 }

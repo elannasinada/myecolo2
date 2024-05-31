@@ -58,6 +58,13 @@
         </script>
         <!-- End Google Tag Manager -->
 
+        <link rel="stylesheet" href=""/>
+
+        <!-- Include Toastr CSS -->
+        <link rel="stylesheet" type="text/css" href="/extra-assets/ijaboCropTool/ijaboCropTool.min.css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    @livewireStyles
     @stack('stylesheets')
     </head>
     <body>
@@ -219,76 +226,7 @@
                     </div>
                 </div>
 
-
-                @if (Auth::guard('admin')->check())
-                    <div class="user-info-dropdown">
-                        <div class="dropdown">
-                            <a
-                                class="dropdown-toggle"
-                                href="#"
-                                role="button"
-                                data-toggle="dropdown"
-                            >
-                                <span class="user-icon">
-                                    <img src="/back/vendors/images/photo1.jpg" alt="" />
-                                </span>
-                                <span class="user-name">Ross C. Lopez</span>
-                            </a>
-                            <div
-                                class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-                            >
-                                <a class="dropdown-item" href="profile.html"
-                                    ><i class="dw dw-user1"></i> Profil</a
-                                >
-                                <a class="dropdown-item" href="profile.html"
-                                    ><i class="dw dw-settings2"></i> Paramètres</a
-                                >
-                                <a class="dropdown-item" href="faq.html"
-                                    ><i class="dw dw-help"></i> Aide</a
-                                >
-                                <a class="dropdown-item" href="{{ route('admin.logout_handler') }}"
-                                    onclick="event.preventDefault();document.getElementById('adminLogoutForm').submit();"><i class="dw dw-logout"></i> Déconnexion</a
-                                >
-                                <form action="{{route('admin.logout_handler')}}" id ="adminLogoutForm" method="POST">@csrf</form>
-                            </div>
-                        </div>
-                    </div>
-
-                @elseif( Auth::guard('seller')->check())
-                    <div class="user-info-dropdown">
-                        <div class="dropdown">
-                            <a
-                                class="dropdown-toggle"
-                                href="#"
-                                role="button"
-                                data-toggle="dropdown"
-                            >
-                                <span class="user-icon">
-                                    <img src="/back/vendors/images/photo1.jpg" alt="" />
-                                </span>
-                                <span class="user-name">Ross C. Lopez</span>
-                            </a>
-                            <div
-                                class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-                            >
-                                <a class="dropdown-item" href="profile.html"
-                                    ><i class="dw dw-user1"></i> Profil</a
-                                >
-                                <a class="dropdown-item" href="profile.html"
-                                    ><i class="dw dw-settings2"></i> Paramètres</a
-                                >
-                                <a class="dropdown-item" href="faq.html"
-                                    ><i class="dw dw-help"></i> Aide</a
-                                >
-                                <a class="dropdown-item" href="{{ route('admin.logout_handler') }}"
-                                    onclick="event.preventDefault();document.getElementById('adminLogoutForm').submit();"><i class="dw dw-logout"></i> Déconnexion</a
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                @endif
-
+                @livewire('admin-seller-header-profil-info')
 
                 <div class="github-link">
                     <a href="https://github.com/dropways/deskapp" target="_blank"
@@ -485,9 +423,9 @@
             <div class="sidebar-menu">
                 <ul id="accordion-menu">
 
-                    @if (Route::is('Admin.*'))
+                    @if (Route::is('admin.*'))
                     <li>
-                        <a href="{{rounte('admin.home')}}" class="dropdown-toggle no-arrow">
+                        <a href="{{route('admin.home')}}" class="dropdown-toggle no-arrow">
                             <span class="micon fa fa-home"></span
                             ><span class="mtext">Accueil</span>
                         </a>
@@ -508,8 +446,7 @@
 
                     <li>
                         <a
-                            href=""
-                            target="_blank"
+                            href="{{route('admin.profile')}}"
                             class="dropdown-toggle no-arrow"
                         >
                             <span class="micon fa fa-user"></span>
@@ -562,51 +499,20 @@
         <div class="main-container">
             <div class="pd-ltr-20 xs-pd-20-10">
                 <div class="min-height-200px">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12">
-                                <div class="title">
-                                    <h4>blank</h4>
-                                </div>
-                                <nav aria-label="breadcrumb" role="navigation">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item">
-                                            <a href="index.html">Accueil</a>
-                                        </li>
-                                        <li class="breadcrumb-item active" aria-current="page">
-                                            blank
-                                        </li>
-                                    </ol>
-                                </nav>
-                            </div>
-                            <div class="col-md-6 col-sm-12 text-right">
-                                <div class="dropdown">
-                                    <a
-                                        class="btn btn-primary dropdown-toggle"
-                                        href="#"
-                                        role="button"
-                                        data-toggle="dropdown"
-                                    >
-                                        Janvier 2018
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">Exporter la liste</a>
-                                        <a class="dropdown-item" href="#">Politiques</a>
-                                        <a class="dropdown-item" href="#">Voir les actifs</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div>
+                        @yield('content')
                     </div>
-                    <div class="pd-20 bg-white border-radius-4 box-shadow mb-30"></div>
-                    @yield('content')
                 </div>
+
                 <div class="footer-wrap pd-20 mb-20 card-box">
                     chi haja hnaya
                 </div>
             </div>
         </div>
         <!-- js -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
+        
         <script src="/back/vendors/scripts/core.js"></script>
         <script src="/back/vendors/scripts/script.min.js"></script>
         <script src="/back/vendors/scripts/process.js"></script>
@@ -619,6 +525,33 @@
                 });|
             }
         </script>
+    <script>
+        @if(Session::has('message'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+            }
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch(type){
+                case 'info':
+                    toastr.info("{{ Session::get('message') }}");
+                    break;
+                case 'success':
+                    toastr.success("{{ Session::get('message') }}");
+                    break;
+                case 'warning':
+                    toastr.warning("{{ Session::get('message') }}");
+                    break;
+                case 'error':
+                    toastr.error("{{ Session::get('message') }}");
+                    break;
+            }
+        @endif
+    </script>
+
+
+        @livewireScripts
         @stack('scripts')
     </body>
 </html>

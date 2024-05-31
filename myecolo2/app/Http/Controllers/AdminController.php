@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller{
 
@@ -24,6 +25,8 @@ class AdminController extends Controller{
                 'login_email.email' => 'L\'adresse e-mail est invalide',
                 'login_email.exists' => 'L\'adresse e-mail n\'existe pas',
                 'password.required' => 'Le mot de passe est requis',
+                'password.min' => 'Le mot de passe doit contenir au moins 5 caractères',
+                'password.max' => 'Le mot de passe ne doit pas dépasser 25 caractères'
             ]);
 
         $creds= array(
@@ -180,5 +183,32 @@ class AdminController extends Controller{
 
         sendEmail($mailConfig);
         return redirect()->route('admin.login')->with('success', 'Mot de passe réinitialisé avec succès. Utilisez le nouveau mot de passe pour se connecter');
+    }
+
+    public function profileView (Request $request){
+        $admin = null;
+        if (Auth::guard('admin')->check()){
+            $admin = Admin::findOrFail(auth()->id());
+        }
+        return view('back.pages.admin.profile', compact('admin'));
+    }
+
+    public function changeProfilePicture(Request $request){
+        $admin= Admin::findOrFail(auth('admin')->id());
+        $path = 'style_assets/img/users/admins';
+        $file = $request->file('adminProfilePictureFile');
+        $old_picture = $admin->getAttributes() ['picture'];
+        $file_path = $path.$old_picture;
+        $filename = 'ADMIN_IMG_'.rand(2,1000).$admin->id.time().uniqid().'.jpg';
+        $upload= $file->move(public_path($path), $filename);
+        if($upload){
+            if( $old_picture != null && File:: exists(public_path($path.$old_picture)) ){
+            File::delete(public_path($path.$old_picture));
+            }
+            $admin->update (['picture'=>$filename]);
+            return response()->json(['status'=>1, 'msg' => 'Votre photo de profil a été mise à jour avec succès.']);
+        }else{
+            return response()->json(['status'=>0, 'msg' => 'Quelque chose s\'est mal passé.']);
+        }
     }
 }
