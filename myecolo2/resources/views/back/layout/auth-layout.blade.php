@@ -64,9 +64,17 @@
 				</div>
 				<div class="login-menu">
 					<ul>
-
+                        
                         @if (!Route::is('admin.*'))
-                            <li><a href="register.html">S'incrire</a></li>
+						   <li><a href="register.html">S'inscrire</a></li>
+                            
+                          @if (Route::is('seller.login'))
+						      <li><a href="{{ route('seller.register') }}">S'incrire</a></li>
+						  @else
+						      <li><a href="{{ route('seller.login') }}">Se connecter</a></li>
+						  @endif
+                         
+						       
                         @endif
 					</ul>
 				</div>
@@ -96,7 +104,7 @@
                 history.pushState(null, null, document.URL);
                 window.addEventListener('popstate', function() {
                 history.pushState(null, null, document.URL);
-                });|
+                });
             }
         </script>
 
