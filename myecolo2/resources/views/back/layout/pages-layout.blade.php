@@ -3,7 +3,7 @@
     <head>
         <!-- Basic Page Info -->
         <meta charset="utf-8" />
-        <title>@yield('title')</title>
+        <title>@yield('pageTitle')</title>
 
         <!-- Site favicon -->
         <link
@@ -56,15 +56,15 @@
                 f.parentNode.insertBefore(j, f);
             })(window, document, "script", "dataLayer", "GTM-NXZMQSS");
         </script>
-        <!-- End Google Tag Manager -->
+		<!-- End Google Tag Manager -->
+       <link rel="stylesheet" href="/extra-assets/ijabo/ijabo.min.css">
+	   <link rel="stylesheet" href="/extra-assets/ijaboCropTool/ijaboCropTool.min.css">
+	   <link rel="stylesheet" href="/extra-assets/jquery-ui-1.13.2/jquery-ui.min.css">
+	   <link rel="stylesheet" href="/extra-assets/jquery-ui-1.13.2/jquery-ui.structure.min.css">
+	   <link rel="stylesheet" href="/extra-assets/jquery-ui-1.13.2/jquery-ui.theme.min.css">
+	   <link rel="stylesheet" href="/extra-assets/summernote/summernote-bs4.min.css">
 
-        <link rel="stylesheet" href=""/>
-
-        <!-- Include Toastr CSS -->
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-        <!-- Include ijaboCropTool CSS -->
-        <link rel="stylesheet" type="text/css" href="/extra-assets/ijaboCropTool/ijaboCropTool.min.css" />
+       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
     @livewireStyles
@@ -428,7 +428,7 @@
 
                     @if (Route::is('admin.*'))
                     <li>
-                        <a href="{{route('admin.home')}}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('admin.home') }}" class="dropdown-toggle no-arrow {{ Route::is('admin.home') ? 'active' : '' }}">
                             <span class="micon fa fa-home"></span
                             ><span class="mtext">Accueil</span>
                         </a>
@@ -450,14 +450,26 @@
                     <li>
                         <a
                             href="{{route('admin.profile')}}"
-                            class="dropdown-toggle no-arrow"
-                        >
+                            class="dropdown-toggle no-arrow {{ Route::is('admin.profile') ? 'active' : '' }}"
+                            >
                             <span class="micon fa fa-user"></span>
                             <span class="mtext"
                                     >Profil</span>
                                     </span>
                             </a>
                         </li>
+                        <li>
+							<a
+								href="{{ route('admin.settings') }}"
+
+								class="dropdown-toggle no-arrow {{ Route::is('admin.settings') ? 'active' : '' }}"
+							>
+								<span class="micon icon-copy fi-widget"></span>
+								<span class="mtext"
+									>Paramètres
+									</span>
+							</a>
+						</li>
                     @else
                     <li>
                         <a href="calendar.html" class="dropdown-toggle no-arrow">
@@ -513,8 +525,6 @@
             </div>
         </div>
         <!-- js -->
-        <script src="/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
-
         <script src="/back/vendors/scripts/core.js"></script>
         <script src="/back/vendors/scripts/script.min.js"></script>
         <script src="/back/vendors/scripts/process.js"></script>
@@ -527,32 +537,38 @@
                 });
             }
         </script>
-
+    <script src="/extra-assets/ijabo/ijabo.min.js"></script>
+    <script src="/extra-assets/ijabo/jquery.ijaboViewer.min.js"></script>
+    <script src="/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
+    <script src="/extra-assets/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <script src="/extra-assets/summernote/summernote-bs4.min.js"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
     <script>
         @if(Session::has('message'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-            }
-            var type = "{{ Session::get('alert-type', 'info') }}";
-            switch(type){
-                case 'info':
-                    toastr.info("{{ Session::get('message') }}");
-                    break;
-                case 'success':
-                    toastr.success("{{ Session::get('message') }}");
-                    break;
-                case 'warning':
-                    toastr.warning("{{ Session::get('message') }}");
-                    break;
-                case 'error':
-                    toastr.error("{{ Session::get('message') }}");
-                    break;
-            }
-        @endif
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                }
+                var type = "{{ Session::get('alert-type', 'info') }}";
+                switch(type){
+                    case 'info':
+                        toastr.info("{{ Session::get('message') }}");
+                        break;
+                    case 'success':
+                        toastr.success("{{ Session::get('message') }}");
+                        break;
+                    case 'warning':
+                        toastr.warning("{{ Session::get('message') }}");
+                        break;
+                    case 'error':
+                        toastr.error("{{ Session::get('message') }}");
+                        break;
+                }
+            @endif
     </script>
 
 

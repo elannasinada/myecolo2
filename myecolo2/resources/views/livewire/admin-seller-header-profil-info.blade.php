@@ -19,7 +19,7 @@
                                 <a class="dropdown-item" href="{{route('admin.profile')}}"
                                     ><i class="dw dw-user1"></i> Profil</a
                                 >
-                                <a class="dropdown-item" href="profile.html"
+                                <a class="dropdown-item" href="{{route('admin.settings')}}"
                                     ><i class="dw dw-settings2"></i> Paramètres</a
                                 >
                                 <a class="dropdown-item" href="faq.html"
@@ -53,8 +53,8 @@
                                 <a class="dropdown-item" href="profile.html"
                                     ><i class="dw dw-user1"></i> Profil</a
                                 >
-                                <a class="dropdown-item" href="profile.html"
-                                    ><i class="dw dw-settings2"></i> Paramètres</a
+                                <a class="dropdown-item" href="{{ route('admin.settings') }}"
+                                ><i class="dw dw-settings2"></i> Paramètres</a
                                 >
                                 <a class="dropdown-item" href="faq.html"
                                     ><i class="dw dw-help"></i> Aide</a

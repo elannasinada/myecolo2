@@ -44,12 +44,15 @@
 			href="/back/vendors/styles/icon-font.min.css"
 		/>
 		<link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.css" />
+        <link
+			rel="stylesheet"
+			type="text/css"
+			href="/back/vendors/styles/icon-font.min.css"
+		/>
+        <link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.css" />
+		<link rel="stylesheet" href="/extra-assets/ijabo/ijabo.min.css">
 
-        <!-- Include Toastr CSS -->
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-        <!-- Include ijaboCropTool CSS -->
-        <link rel="stylesheet" type="text/css" href="/extra-assets/ijaboCropTool/ijaboCropTool.min.css" />
 
         @livewireStyles
         @stack('stylesheets')
@@ -67,17 +70,11 @@
 				<div class="login-menu">
 					<ul>
 
-                        @if (!Route::is('admin.*'))
-						   <li><a href="register.html">S'inscrire</a></li>
-
                           @if (Route::is('seller.login'))
-						      <li><a href="{{ route('seller.register') }}">S'incrire</a></li>
-						  @else
 						      <li><a href="{{ route('seller.login') }}">Se connecter</a></li>
+						  @else
+						      <li><a href="{{ route('seller.register') }}">S'inscrire</a></li>
 						  @endif
-
-
-                        @endif
 					</ul>
 				</div>
 			</div>
@@ -98,6 +95,7 @@
 		</div>
 		<!-- js -->
         <!-- Include ijaboCropTool JS -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
         <script src="/back/vendors/scripts/core.js"></script>
 		<script src="/back/vendors/scripts/script.min.js"></script>
@@ -111,9 +109,11 @@
                 });
             }
         </script>
+        <script src="/extra-assets/ijabo/ijabo.min.js"></script>
+		<script src="/extra-assets/ijabo/jquery.ijaboViewer.min.js"></script>
 
-        <!-- Include Toastr JS -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
         <script>
             @if(Session::has('message'))
                 toastr.options = {

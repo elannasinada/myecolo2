@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use constGuards;
-use constDefaults;
+
 use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use constGuards;
+use constDefaults;
 use Illuminate\Support\Facades\File;
+use App\Models\GeneralSetting;
 
 class AdminController extends Controller{
 
@@ -25,8 +27,6 @@ class AdminController extends Controller{
                 'login_email.email' => 'L\'adresse e-mail est invalide',
                 'login_email.exists' => 'L\'adresse e-mail n\'existe pas',
                 'password.required' => 'Le mot de passe est requis',
-                'password.min' => 'Le mot de passe doit contenir au moins 5 caractères',
-                'password.max' => 'Le mot de passe ne doit pas dépasser 25 caractères'
             ]);
 
         $creds= array(
@@ -105,7 +105,7 @@ class AdminController extends Controller{
             'mail_body' => $mail_body
         );
 
-        if (sendEmail ($mailConfig)){
+        if (sendEmail($mailConfig)){
         session()->flash('success', 'Lien de réinitialisation du mot de passe envoyé à votre adresse e-mail');
         return redirect()->route('admin.forgot-password');
         }else{
@@ -173,8 +173,8 @@ class AdminController extends Controller{
         $mail_body = view('email-templates.admin-reset-email-template', $data)->render();
 
         $mailConfig = array(
-            'mail_from_email' => env('EMAIL_FROM_ADDRESS'),
-            'mail_from_name' => env('EMAIL_FROM_NAME'),
+            'mail_from_email' => 'info@myecolo2.test',
+            'mail_from_name' => 'myecolo2',
             'mail_recipient_email' => $admin -> email,
             'mail_recipient_name' => $admin -> first_name . ' ' . $admin -> last_name,
             'mail_subject' => 'Votre mot de passe a été réinitialisé',
@@ -194,21 +194,23 @@ class AdminController extends Controller{
     }
 
     public function changeProfilePicture(Request $request){
-        $admin= Admin::findOrFail(auth('admin')->id());
-        $path = 'style_assets/img/users/admins';
+        $admin = Admin::findOrFail(auth('admin')->id());
+        $path = 'style_assets/img/users/admins/';
         $file = $request->file('adminProfilePictureFile');
-        $old_picture = $admin->getAttributes() ['picture'];
+        $old_picture = $admin->getAttributes()['picture'];
         $file_path = $path.$old_picture;
         $filename = 'ADMIN_IMG_'.rand(2,1000).$admin->id.time().uniqid().'.jpg';
-        $upload= $file->move(public_path($path), $filename);
+
+        $upload = $file->move(public_path($path),$filename);
+
         if($upload){
-            if( $old_picture != null && File:: exists(public_path($path.$old_picture)) ){
-            File::delete(public_path($path.$old_picture));
+            if( $old_picture != null && File::exists(public_path($path.$old_picture)) ){
+                File::delete(public_path($path.$old_picture));
             }
-            $admin->update (['picture'=>$filename]);
-            return response()->json(['status'=>1, 'msg' => 'Votre photo de profil a été mise à jour avec succès.']);
+            $admin->update(['picture'=>$filename]);
+            return response()->json(['status'=>1,'msg'=>'Your profile picture has been successfully updated.']);
         }else{
-            return response()->json(['status'=>0, 'msg' => 'Quelque chose s\'est mal passé.']);
+            return response()->json(['status'=>0,'msg'=>'Something went wrong.']);
         }
     }
 }
