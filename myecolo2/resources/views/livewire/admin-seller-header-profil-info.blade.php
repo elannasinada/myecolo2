@@ -59,9 +59,10 @@
                                 <a class="dropdown-item" href="faq.html"
                                     ><i class="dw dw-help"></i> Aide</a
                                 >
-                                <a class="dropdown-item" href="{{ route('admin.logout_handler') }}"
-                                    onclick="event.preventDefault();document.getElementById('adminLogoutForm').submit();"><i class="dw dw-logout"></i> Déconnexion</a
-                                >
+                                <a class="dropdown-item" href="{{ route('seller.logout') }}" onclick="event.preventDefault();document.getElementById('sellerLogoutForm').submit();"
+								><i class="dw dw-logout"></i> Déconnexion</a
+							>
+							<form action="{{ route('seller.logout') }}" id="sellerLogoutForm" method="POST">@csrf</form>
                             </div>
                         </div>
                     </div>

@@ -27,6 +27,9 @@ class AdminController extends Controller{
                 'login_email.email' => 'L\'adresse e-mail est invalide',
                 'login_email.exists' => 'L\'adresse e-mail n\'existe pas',
                 'password.required' => 'Le mot de passe est requis',
+                'password.min' => 'Le mot de passe doit comporter au moins 5 caractères',
+                'password.max' => 'Le mot de passe ne doit pas dépasser 25 caractères'
+
             ]);
 
         $creds= array(
@@ -208,9 +211,56 @@ class AdminController extends Controller{
                 File::delete(public_path($path.$old_picture));
             }
             $admin->update(['picture'=>$filename]);
-            return response()->json(['status'=>1,'msg'=>'Your profile picture has been successfully updated.']);
+            return response()->json(['status'=>1,'msg'=>'Votre photo de profil a été mise à jour avec succès.']);
         }else{
-            return response()->json(['status'=>0,'msg'=>'Something went wrong.']);
+            return response()->json(['status'=>0,'msg'=>'Quelque chose s\'est mal passé.']);
+        }
+    }
+
+
+    public function changeLogo(Request $request){
+        $path = 'style_assets/img/site/';
+        $file = $request->file('site_logo');
+        $settings = GeneralSetting::first();
+        $old_logo = $settings->site_logo;
+        $filename = 'LOGO_'.uniqid().'.'.$file->getClientOriginalExtension();
+
+        $upload = $file->move(public_path($path), $filename);
+
+        if ($upload) {
+            if ($old_logo && File::exists(public_path($path . $old_logo))) {
+                File::delete(public_path($path . $old_logo));
+            }
+            $settings->site_logo = $filename;
+            $settings->save();
+
+            return response()->json(['status' => 1, 'msg' => 'Logo du site a été mise à jour avec succès.', 'logo' => $filename]);
+        } else {
+            return response()->json(['status' => 0, 'msg' => 'Quelque chose s\'est mal passé.']);
+        }
+    }
+
+
+    public function changeFavicon(Request $request){
+        $path = 'style_assets/img/site/';
+        $file = $request->file('site_favicon');
+        $settings = new GeneralSetting();
+        $old_favicon = $settings->first()->site_favicon;
+        $filename = 'FAV_'.uniqid().'.'.$file->getClientOriginalExtension();
+
+        $upload = $file->move(public_path($path), $filename);
+
+        if ($upload) {
+            if ($old_favicon != null && File::exists(public_path($path.$old_favicon))) {
+            File::delete(public_path($path.$old_favicon));
+            }
+            $settings = $settings->first();
+            $settings->site_favicon = $filename;
+            $update = $settings->save();
+
+            return response()->json(['status'=>1,'msg'=>'L\'icône du site a été mise à jour avec succès.']);
+        }else{
+            return response()->json(['status'=>0,'msg'=>'Quelque chose s\'est mal passé.']);
         }
     }
 }

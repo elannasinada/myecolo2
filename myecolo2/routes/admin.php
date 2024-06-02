@@ -22,8 +22,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/profile',[AdminController::class,'profileView'])->name('profile');
         Route::post('/change-profile-picture',[AdminController::class,'changeProfilePicture'])->name('change-profile-picture');
         Route::view('/settings','back.pages.settings')->name('settings');
-        // Route::post('/change-logo',[AdminController::class,'changeLogo'])->name('change-logo');
-        // Route::post('/change-favicon',[AdminController::class,'changeFavicon'])->name('change-favicon');
+        Route::post('/change-logo',[AdminController::class,'changeLogo'])->name('change-logo');
+        Route::post('/change-favicon',[AdminController::class,'changeFavicon'])->name('change-favicon');
 
         // //CATEGORIES AND SUB CATEGORIES MANAGEMENT
         // Route::prefix('manage-categories')->name('manage-categories.')->group(function(){

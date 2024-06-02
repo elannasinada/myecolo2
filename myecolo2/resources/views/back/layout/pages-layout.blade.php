@@ -6,22 +6,12 @@
         <title>@yield('pageTitle')</title>
 
         <!-- Site favicon -->
-        <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/back/vendors/images/apple-touch-icon.png"
-        />
-        <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/back/vendors/images/favicon-32x32.png"
-        />
-        <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="/back/vendors/images/favicon-16x16.png"
+
+		<link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/style_assets/img/site/{{ get_settings()->site_favicon }}"
         />
 
         <!-- Mobile Specific Metas -->
@@ -138,17 +128,6 @@
                 </div>
             </div>
             <div class="header-right">
-                <div class="dashboard-setting user-notification">
-                    <div class="dropdown">
-                        <a
-                            class="dropdown-toggle no-arrow"
-                            href="javascript:;"
-                            data-toggle="right-sidebar"
-                        >
-                            <i class="dw dw-settings2"></i>
-                        </a>
-                    </div>
-                </div>
                 <div class="user-notification">
                     <div class="dropdown">
                         <a
@@ -168,8 +147,7 @@
                                             <img src="/back/vendors/images/img.jpg" alt="" />
                                             <h3>John Doe</h3>
                                             <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                elit, sed...
+                                                Ce vendeur a été vérifé
                                             </p>
                                         </a>
                                     </li>
@@ -178,8 +156,7 @@
                                             <img src="/back/vendors/images/photo1.jpg" alt="" />
                                             <h3>Lea R. Frith</h3>
                                             <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                elit, sed...
+                                                Ce vendeur a été vérifé
                                             </p>
                                         </a>
                                     </li>
@@ -188,8 +165,7 @@
                                             <img src="/back/vendors/images/photo2.jpg" alt="" />
                                             <h3>Erik L. Richards</h3>
                                             <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                elit, sed...
+                                                Ce vendeur a été vérifé
                                             </p>
                                         </a>
                                     </li>
@@ -198,8 +174,7 @@
                                             <img src="/back/vendors/images/photo3.jpg" alt="" />
                                             <h3>John Doe</h3>
                                             <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                elit, sed...
+                                                Ce vendeur a été vérifé
                                             </p>
                                         </a>
                                     </li>
@@ -208,8 +183,7 @@
                                             <img src="/back/vendors/images/photo4.jpg" alt="" />
                                             <h3>Renee I. Hansen</h3>
                                             <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                elit, sed...
+                                                Ce vendeur a été vérifé
                                             </p>
                                         </a>
                                     </li>
@@ -218,8 +192,7 @@
                                             <img src="/back/vendors/images/img.jpg" alt="" />
                                             <h3>Vicki M. Coleman</h3>
                                             <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                elit, sed...
+                                                Ce vendeur a été vérifé
                                             </p>
                                         </a>
                                     </li>
@@ -231,189 +204,16 @@
 
                 @livewire('admin-seller-header-profil-info')
 
-                <div class="github-link">
-                    <a href="https://github.com/dropways/deskapp" target="_blank"
-                        ><img src="/back/vendors/images/github.svg" alt=""
-                    /></a>
-                </div>
 			</div>
 		</div>
-    <div class="right-sidebar">
-        <div class="sidebar-title">
-            <h3 class="weight-600 font-16 text-blue">
-                Paramètres de mise en page
-                <span class="btn-block font-weight-400 font-12"
-                    >Paramètres de l'interface utilisateur</span
-                >
-            </h3>
-            <div class="close-sidebar" data-toggle="right-sidebar-close">
-                <i class="icon-copy ion-close-round"></i>
-            </div>
-        </div>
-        <div class="right-sidebar-body customscroll">
-            <div class="right-sidebar-body-content">
-                <h4 class="weight-600 font-18 pb-10">Arrière-plan de l'en-tête</h4>
-                <div class="sidebar-btn-group pb-30 mb-10">
-                    <a
-                        href="javascript:void(0);"
-                        class="btn btn-outline-primary header-white active"
-                        >Blanc</a
-                    >
-                    <a
-                        href="javascript:void(0);"
-                        class="btn btn-outline-primary header-dark"
-                        >Sombre</a
-                    >
-                </div>
 
-                <h4 class="weight-600 font-18 pb-10">Arrière-plan de la barre latérale</h4>
-                <div class="sidebar-btn-group pb-30 mb-10">
-                    <a
-                        href="javascript:void(0);"
-                        class="btn btn-outline-primary sidebar-light"
-                        >Blanc</a
-                    >
-                    <a
-                        href="javascript:void(0);"
-                        class="btn btn-outline-primary sidebar-dark active"
-                        >Sombre</a
-                    >
-                </div>
-
-                <h4 class="weight-600 font-18 pb-10">Icône de menu déroulant</h4>
-                <div class="sidebar-radio-group pb-10 mb-10">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebaricon-1"
-                            name="menu-dropdown-icon"
-                            class="custom-control-input"
-                            value="icon-style-1"
-                            checked=""
-                        />
-                        <label class="custom-control-label" for="sidebaricon-1"
-                            ><i class="fa fa-angle-down"></i
-                        ></label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebaricon-2"
-                            name="menu-dropdown-icon"
-                            class="custom-control-input"
-                            value="icon-style-2"
-                        />
-                        <label class="custom-control-label" for="sidebaricon-2"
-                            ><i class="ion-plus-round"></i
-                        ></label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebaricon-3"
-                            name="menu-dropdown-icon"
-                            class="custom-control-input"
-                            value="icon-style-3"
-                        />
-                        <label class="custom-control-label" for="sidebaricon-3"
-                            ><i class="fa fa-angle-double-right"></i
-                        ></label>
-                    </div>
-                </div>
-
-                <h4 class="weight-600 font-18 pb-10">Icône de la liste de menu</h4>
-                <div class="sidebar-radio-group pb-30 mb-10">
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebariconlist-1"
-                            name="menu-list-icon"
-                            class="custom-control-input"
-                            value="icon-list-style-1"
-                            checked=""
-                        />
-                        <label class="custom-control-label" for="sidebariconlist-1"
-                            ><i class="ion-minus-round"></i
-                        ></label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebariconlist-2"
-                            name="menu-list-icon"
-                            class="custom-control-input"
-                            value="icon-list-style-2"
-                        />
-                        <label class="custom-control-label" for="sidebariconlist-2"
-                            ><i class="fa fa-circle-o" aria-hidden="true"></i
-                        ></label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebariconlist-3"
-                            name="menu-list-icon"
-                            class="custom-control-input"
-                            value="icon-list-style-3"
-                        />
-                        <label class="custom-control-label" for="sidebariconlist-3"
-                            ><i class="dw dw-check"></i
-                        ></label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebariconlist-4"
-                            name="menu-list-icon"
-                            class="custom-control-input"
-                            value="icon-list-style-4"
-                            checked=""
-                        />
-                        <label class="custom-control-label" for="sidebariconlist-4"
-                            ><i class="icon-copy dw dw-next-2"></i
-                        ></label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebariconlist-5"
-                            name="menu-list-icon"
-                            class="custom-control-input"
-                            value="icon-list-style-5"
-                        />
-                        <label class="custom-control-label" for="sidebariconlist-5"
-                            ><i class="dw dw-fast-forward-1"></i
-                        ></label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input
-                            type="radio"
-                            id="sidebariconlist-6"
-                            name="menu-list-icon"
-                            class="custom-control-input"
-                            value="icon-list-style-6"
-                        />
-                        <label class="custom-control-label" for="sidebariconlist-6"
-                            ><i class="dw dw-next"></i
-                        ></label>
-                    </div>
-                </div>
-
-                <div class="reset-options pt-30 text-center">
-                    <button class="btn btn-danger" id="reset-settings">
-                        Réinitialiser les paramètres
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="index.html">
-                <img src="/back/vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
+            <a href="/">
+                <img src="/style_assets/img/site/{{ get_settings()->site_logo }}" alt="" class="dark-logo" />
                 <img
-                    src="/back/vendors/images/deskapp-logo-white.svg"
+                    src="/style_assets/img/site/{{ get_settings()->site_logo }}"
                     alt=""
                     class="light-logo"
                 />

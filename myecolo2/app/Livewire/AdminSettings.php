@@ -27,17 +27,20 @@ class AdminSettings extends Component
         $this->site_phone = get_settings()->site_phone;
         $this->site_meta_keywords = get_settings()->site_meta_keywords;
         $this->site_meta_description = get_settings()->site_meta_description;
-        $this->site_logo = get_settings()->site_logo;
-        $this->site_favicon = get_settings()->site_favicon;
+
+        $settings = GeneralSetting::first();
+        $this->site_logo = $settings->site_logo;
+        $this->site_favicon = $settings->site_favicon;
+
         $this->site_address = get_settings()->site_address;
 
-        // //Populate social networks
-        // $this->facebook_url = get_social_network()->facebook_url;
-        // $this->twitter_url = get_social_network()->twitter_url;
-        // $this->instagram_url = get_social_network()->instagram_url;
-        // $this->youtube_url = get_social_network()->youtube_url;
-        // $this->github_url = get_social_network()->github_url;
-        // $this->linkedin_url = get_social_network()->linkedin_url;
+        //Populate social networks
+        $this->facebook_url = get_social_network()->facebook_url;
+        $this->twitter_url = get_social_network()->twitter_url;
+        $this->instagram_url = get_social_network()->instagram_url;
+        $this->youtube_url = get_social_network()->youtube_url;
+        $this->github_url = get_social_network()->github_url;
+        $this->linkedin_url = get_social_network()->linkedin_url;
     }
 
     public function updateGeneralSettings(){
@@ -67,23 +70,28 @@ class AdminSettings extends Component
         }
     }
 
-    // public function updateSocialNetworks(){
-    //     $social_network = new SocialNetwork();
-    //     $social_network = $social_network->first();
-    //     $social_network->facebook_url = $this->facebook_url;
-    //     $social_network->twitter_url = $this->twitter_url;
-    //     $social_network->instagram_url = $this->instagram_url;
-    //     $social_network->youtube_url = $this->youtube_url;
-    //     $social_network->github_url = $this->github_url;
-    //     $social_network->linkedin_url = $this->linkedin_url;
-    //     $update = $social_network->save();
+    public function updateSocialNetworks(){
+        $social_network = new SocialNetwork();
+        $social_network = $social_network->first();
+        $social_network->facebook_url = $this->facebook_url;
+        $social_network->twitter_url = $this->twitter_url;
+        $social_network->instagram_url = $this->instagram_url;
+        $social_network->youtube_url = $this->youtube_url;
+        $social_network->github_url = $this->github_url;
+        $social_network->linkedin_url = $this->linkedin_url;
+        $update = $social_network->save();
 
-    //     if( $update ){
-    //         $this->showToastr('success','Social networks have been successfully updated.');
-    //     }else{
-    //         $this->showToastr('error','Something went wrong. Try again later');
-    //     }
-    // }
+
+        if( $update ){
+            session()->flash('message', 'Les réseaux sociaux ont été mis à jour avec succès.');
+            session()->flash('alert-type', 'success');
+            return redirect()->route('admin.settings');
+        }else{
+            session()->flash('message','Quelque chose s\'est mal passé. Réessayer');
+            session()->flash('alert-type', 'error');
+            return redirect()->route('admin.settings');
+        }
+    }
 
     public function showToastr($type, $message){
         return $this->dispatch('showToastr',[
@@ -94,6 +102,10 @@ class AdminSettings extends Component
 
     public function render()
     {
-        return view('livewire.admin-settings');
+
+        return view('livewire.admin-settings', [
+            'site_logo' => $this->site_logo,
+            'site_favicon' => $this->site_favicon
+        ]);
     }
 }

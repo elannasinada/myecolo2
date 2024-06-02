@@ -18,6 +18,12 @@ class Authenticate extends Middleware
                 session()->flash('fail', 'Vous devez d\'abord vous connecter');
                 return route('admin.login');
             }
+
+            if( $request->routeIs('seller.*') ){
+                session()->flash('fail','Vous devez d\'abord vous connecter');
+                return route('seller.login');
+            }
         }
+
     }
 }

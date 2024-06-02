@@ -37,8 +37,8 @@
     <div class="reg-success">
         <span>&check;</span>
         <p>
-            Félicitations, votre inscription a été effectuée avec succès. 
-            Veuillez consulter votre boîte mail pour activer votre compte.
+            Félicitations, votre inscription a été effectuée avec succès.
+            Veuillez attendre pour que l'admin active votre compte après vérification.
         </p>
     </div>
 </body>

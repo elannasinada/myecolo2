@@ -18,12 +18,13 @@ class Seller extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'name',
+        'username',
         'email',
         'email_verified_at',
-        'verified', 
+        'verified',
         'password',
+        'autorisation',
         'address',
         'phone',
         'city',

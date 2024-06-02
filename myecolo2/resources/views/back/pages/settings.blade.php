@@ -28,98 +28,98 @@
 
 @endsection
 @push('scripts')
-    <script>
-        $('input[type="file"][name="site_logo"][id="site_logo"]').ijaboViewer({
-            preview:'#site_logo_image_preview',
-            imageShape:'rectangular', //set square if is favicon
-            allowedExtensions:['png','jpg'],
-            onErrorShape:function(message, element){
-                alert('message');
-            },
-            onInvalidType:function(message, element){
-                alert(message);
-            },
-            onSuccess:function(message, element){}
-        });
+<script>
+    $('input[type="file"][name="site_logo"][id="site_logo"]').ijaboViewer({
+        preview: '#site_logo_image_preview',
+        imageShape: 'rectangle',
+        allowedExtensions: ['png', 'jpg'],
+        onErrorShape: function(message, element){
+            alert(message);
+        },
+        onInvalidType: function(message, element){
+            alert(message);
+        },
+        onSuccess: function(message, element){}
+    });
 
-        $('#change_site_logo_form').on('submit', function(e){
-            e.preventDefault();
-            var form = this;
-            var formdata = new FormData(form);
-            var inputFileVal = $(form).find('input[type="file"][name="site_logo"]').val();
+    $('#change_site_logo_form').on('submit', function(e){
+        e.preventDefault();
+        var form = this;
+        var formdata = new FormData(form);
+        var inputFileVal = $(form).find('input[type="file"][name="site_logo"]').val();
 
-            if( inputFileVal.length > 0 ){
-               $.ajax({
-                 url:$(form).attr('action'),
-                 method:$(form).attr('method'),
-                 data:formdata,
-                 processData:false,
-                 dataType:'json',
-                 contentType:false,
-                 beforeSend:function(){
+        if (inputFileVal.length > 0) {
+            $.ajax({
+                url: $(form).attr('action'),
+                method: $(form).attr('method'),
+                data: formdata,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                beforeSend: function(){
                     toastr.remove();
                     $(form).find('span.error-text').text('');
-                 },
-                 success:function(response){
-                    if(response.status == 1){
+                },
+                success: function(response){
+                    if (response.status == 1) {
                         toastr.success(response.msg);
                         $(form)[0].reset();
-                    }else{
+                        $('#site_logo_image_preview').attr('src', '/style_assets/img/site/' + response.logo + '?' + new Date().getTime());
+                    } else {
                         toastr.error(response.msg);
                     }
-                 }
-               });
-            }else{
-                $(form).find('span.error-text').text('Veuillez sélectionner un fichier d\'image de logo. Le type de fichier PNG est recommandé.');
-            }
-        });
+                }
+            });
+        } else {
+            $(form).find('span.error-text').text('Veuillez sélectionner un fichier d\'image pour le logo. Le format PNG est recommandé.');
+        }
+    });
 
 
-        $('input[type="file"][name="site_favicon"][id="site_favicon"]').ijaboViewer({
-            preview:'#site_favicon_image_preview',
-            imageShape:'square',
-            allowedExtensions:['png'],
-            onErrorShape:function(message, element){
-                alert(message);
-            },
-            onInvalidType:function(message, element){
-                alert(message);
-            },
-            onSuccess:function(message, element){}
-        });
+    $('input[type="file"][name="site_favicon"][id="site_favicon"]').ijaboViewer({
+        preview:'#site_favicon_image_preview',
+        imageShape:'square',
+        allowedExtensions:['png'],
+        onErrorShape:function(message, element){
+            alert(message);
+        },
+        onInvalidType:function(message, element){
+            alert(message);
+        },
+        onSuccess:function(message, element){}
+    });
 
 
-        $('#change_site_favicon_form').on('submit', function(e){
-            e.preventDefault();
-            var form = this;
-            var formdata = new FormData(form);
-            var inputFileVal = $(form).find('input[type="file"][name="site_favicon"]').val();
+    $('#change_site_favicon_form').on('submit', function(e){
+        e.preventDefault();
+        var form = this;
+        var formdata = new FormData(form);
+        var inputFileVal = $(form).find('input[type="file"][name="site_favicon"]').val();
 
-            if( inputFileVal.length > 0 ){
-               $.ajax({
-                  url:$(form).attr('action'),
-                  method:$(form).attr('method'),
-                  data:formdata,
-                  processData:false,
-                  dataType:'json',
-                  contentType:false,
-                  beforeSend:function(){
-                    $(form).find('span.error-text').text('');
-                  },
-                  success:function(response){
-                    if( response.status == 1 ){
-                        toastr.success(response.msg);
-                        $(form)[0].reset();
-                    }else{
-                        toastr.error(response.msg);
-                    }
-                  }
-               });
-            }else{
-                $(form).find('span.error-text').text('Veuillez sélectionner un fichier d\'image favicon. Le type de fichier PNG est recommandé.');
-            }
-        });
-
+        if( inputFileVal.length > 0 ){
+           $.ajax({
+              url:$(form).attr('action'),
+              method:$(form).attr('method'),
+              data:formdata,
+              processData:false,
+              dataType:'json',
+              contentType:false,
+              beforeSend:function(){
+                $(form).find('span.error-text').text('');
+              },
+              success:function(response){
+                if( response.status == 1 ){
+                    toastr.success(response.msg);
+                    $(form)[0].reset();
+                }else{
+                    toastr.error(response.msg);
+                }
+              }
+           });
+        } else {
+            $(form).find('span.error-text').text('Veuillez sélectionner un fichier d\'image pour la favicon. Le format PNG est recommandé.');
+        }
+    });
 
     </script>
 @endpush
