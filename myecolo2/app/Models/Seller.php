@@ -25,6 +25,7 @@ class Seller extends Authenticatable
         'verified',
         'password',
         'autorisation',
+        'picture',	
         'address',
         'phone',
         'city',
@@ -51,4 +52,13 @@ class Seller extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function getPictureAttribute($value){
+        if( $value ){
+            return asset('/style_assets/img/users/sellers/'.$value);
+        }else{
+            return asset('/style_assets/img/users/default-avatar.png');
+        }
+    }
 }

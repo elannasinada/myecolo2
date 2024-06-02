@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\DB;
 use constGuards;
 use constDefaults;
 use Illuminate\Support\Facades\File;
-use Mberecall\Kropify\Kropify;
 use App\Models\Shop;
 
 
@@ -284,8 +283,8 @@ class SellerController extends Controller{
             public function resetPasswordHandler(Request $request){
               //Validate the form
               $request->validate([
-             'new_password'=>'required|min:5|max:45|required_with:confirm_new_password|same:confirm_new_password',
-             'confirm_new_password'=>'required'
+                'new_password'=>'required|min:5|max:45|required_with:confirm_new_password|same:confirm_new_password',
+                'confirm_new_password'=>'required'
               ]);
 
               $token = DB::table('password_reset_tokens')
@@ -327,34 +326,33 @@ class SellerController extends Controller{
 
             } //End Method
 
-            // public function profileView(Request $request){
-            // $data = [
-            //     'pageTitle'=>'Profil'
-            // ];
-            // return view('back.pages.seller.profile',$data);
-            // }
+            public function profileView(Request $request){
+            $data = [
+                'pageTitle'=>'Profil'
+            ];
+            return view('back.pages.seller.profile',$data);
+            }
 
-            // public function changeProfilePicture(Request $request){
-            // $seller = Seller::findOrFail(auth('seller')->id());
-            // $path = 'images/users/sellers/';
-            // $file = $request->file('sellerProfilePictureFile');
-            // $old_picture = $seller->getAttributes()['picture'];
-            // $filename = 'SELLER_IMG_'.$seller->id.'.jpg';
+            public function changeProfilePicture(Request $request){
+                $seller = Seller::findOrFail(auth('seller')->id());
+                $path = 'style_assets/img/users/sellers/';
+                $file = $request->file('sellerProfilePictureFile');
+                $old_picture = $seller->getAttributes()['picture'];
+                $filename = 'SELLER_IMG_'.$seller->id.'.jpg';
 
-            // $upload = Kropify::getFile($file,$filename)->maxWoH(325)->save($path);
-            // $infos = $upload->getInfo();
+                $upload = $file->move(public_path($path),$filename);
 
-            // if( $upload ){
-            //     if( $old_picture != null && File::exists(public_path($path.$old_picture)) ){
-            //     File::delete(public_path($path.$old_picture));
-            //     }
-            //     $seller->update(['picture'=>$infos->getName]);
+                if($upload){
+                    if( $old_picture != null && File::exists(public_path($path.$old_picture)) ){
+                        File::delete(public_path($path.$old_picture));
+                    }
+                    $seller->update(['picture'=>$filename]);
+                    return response()->json(['status'=>1,'msg'=>'Votre photo de profil a été mise à jour avec succès.']);
+                }else{
+                    return response()->json(['status'=>0,'msg'=>'Quelque chose s\'est mal passé.']);
+                }
+            }
 
-            //     return response()->json(['status'=>1,'msg'=>'Votre photo de profil a été mise à jour avec succès.']);
-            // }else{
-            //     return response()->json(['status'=>0,'msg'=>'Quelque chose s\'est mal passé.']);
-            // }
-            // }
 
             // public function shopSettings(Request $request){
             // $seller = Seller::findOrFail(auth('seller')->id());

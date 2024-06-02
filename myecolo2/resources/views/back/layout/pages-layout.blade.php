@@ -139,7 +139,7 @@
                             <i class="icon-copy dw dw-notification"></i>
                             <span class="badge notification-active"></span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        {{-- <div class="dropdown-menu dropdown-menu-right">
                             <div class="notification-list mx-h-350 customscroll">
                                 <ul>
                                     <li>
@@ -198,11 +198,11 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
-                @livewire('admin-seller-header-profil-info')
+                @livewire('admin-seller-header-profile-info')
 
 			</div>
 		</div>
@@ -272,9 +272,9 @@
 						</li>
                     @else
                     <li>
-                        <a href="calendar.html" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('seller.home') }}" class="dropdown-toggle no-arrow {{ Route::is('seller.home') ? 'active' : '' }}">
                             <span class="micon fa fa-home"></span
-                            ><span class="mtext">Accueil</span>
+                            ><span class="mtext">Acceuil</span>
                         </a>
                     </li>
 
@@ -293,15 +293,15 @@
 
                     <li>
                         <a
-                            href=""
-                            target="_blank"
-                            class="dropdown-toggle no-arrow"
-                        >
-                            <span class="micon fa fa-user"></span>
-                            <span class="mtext"
-                                    >Profil</span>
-                                    </span>
-                            </a>
+								href="{{ route('seller.profile') }}"
+
+								class="dropdown-toggle no-arrow {{ Route::is('seller.profile') ? 'active' : '' }}"
+							>
+								<span class="micon fa fa-user"></span>
+								<span class="mtext"
+									>Profile
+									</span>
+							</a>
                         </li>
                     @endif
 

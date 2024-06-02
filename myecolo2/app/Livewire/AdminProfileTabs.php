@@ -65,12 +65,12 @@ class AdminProfileTabs extends Component
             'current_password'=>[
                 'required', function($attribute, $value, $fail){
                     if(!Hash::check($value, Admin::find(auth('admin')->id())->password)){
-                        return $fail(__('The current password is incorrect'));
+                        return $fail(__('Votre mot de passe actuel est incorrect'));
                     }
                 }
             ],
-            'new_password'=>'required|min:5|max:45|confirmed'
-        ]);
+            'new_password'=>'required|min:5|max:45|same:new_password_confirmation|different:current_password',
+        ],$this->messages());
 
         $query = Admin::findOrFail(auth('admin')->id())->update([
             'password'=>Hash::make($this->new_password)
@@ -126,7 +126,9 @@ class AdminProfileTabs extends Component
             'new_password_confirmation.required' => 'La confirmation du mot de passe est requise',
             'new_password_confirmation.min' => 'La confirmation du mot de passe doit comporter au moins 5 caractères',
             'new_password_confirmation.same' => 'Le mot de passe et la confirmation du mot de passe doivent correspondre',
-            "new_password.same" => "Le mot de passe et la confirmation du mot de passe doivent correspondre",
+            'new_password.same' => 'Le mot de passe et la confirmation du mot de passe doivent correspondre',
+            'new_password.different' => 'Le nouveau mot de passe doit être différent du mot de passe actuel.'
+
         ];
     }
 

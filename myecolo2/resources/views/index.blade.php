@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--favicon-->
-    <link rel= "shortcut icon" href="style_assets/img/MyEcolo-logo-alone.png">
-    <link rel= "icon" href="style_assets/img/MyEcolo-alone.svg" type="image/x-icon">
+    <!-- Site favicon -->
+
+	<link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/style_assets/img/site/{{ get_settings()->site_favicon }}"
+    />
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MyEcolo - Acceuil</title>
