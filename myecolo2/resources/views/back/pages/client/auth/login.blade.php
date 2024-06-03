@@ -1,12 +1,12 @@
 @extends('back.layout.auth-layout')
-@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Connexion Vendeur')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Connexion client')
 @section('content')
 
 <div class="login-box bg-white box-shadow border-radius-10">
     <div class="login-title">
-        <h2 class="text-center text-primary">Connexion vendeur</h2>
+        <h2 class="text-center text-primary">Connexion client</h2>
     </div>
-    <form action="{{ route('seller.login-handler') }}" method="POST">
+    <form action="{{ route('client.login-handler') }}" method="POST">
         @csrf
         <x-alert.form-alert/>
         <div class="input-group custom">
@@ -44,7 +44,7 @@
             </div>
             <div class="col-6">
                 <div class="forgot-password">
-                    <a href="{{ route('seller.forgot-password') }}">Mot de passe oublié</a>
+                    <a href="{{ route('client.forgot-password') }}">Mot de passe oublié</a>
                 </div>
             </div>
         </div>

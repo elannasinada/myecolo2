@@ -61,151 +61,17 @@
     @stack('stylesheets')
     </head>
     <body>
-        <div class="header">
-            <div class="header-left">
-                <div class="menu-icon bi bi-list"></div>
-                <div
-                    class="search-toggle-icon bi bi-search"
-                    data-toggle="header_search"
-                ></div>
-                <div class="header-search">
-                    <form>
-                        <div class="form-group mb-0">
-                            <i class="dw dw-search2 search-icon"></i>
-                            <input
-                                type="text"
-                                class="form-control search-input"
-                                placeholder="Rechercher ici"
-                            />
-                            <div class="dropdown">
-                                <a
-                                    class="dropdown-toggle no-arrow"
-                                    href="#"
-                                    role="button"
-                                    data-toggle="dropdown"
-                                >
-                                    <i class="ion-arrow-down-c"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="form-group row">
-                                        <label class="col-sm-12 col-md-2 col-form-label"
-                                            >De</label
-                                        >
-                                        <div class="col-sm-12 col-md-10">
-                                            <input
-                                                class="form-control form-control-sm form-control-line"
-                                                type="text"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-12 col-md-2 col-form-label">À</label>
-                                        <div class="col-sm-12 col-md-10">
-                                            <input
-                                                class="form-control form-control-sm form-control-line"
-                                                type="text"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-12 col-md-2 col-form-label"
-                                            >Sujet</label
-                                        >
-                                        <div class="col-sm-12 col-md-10">
-                                            <input
-                                                class="form-control form-control-sm form-control-line"
-                                                type="text"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <button class="btn btn-primary">Rechercher</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+        @if (!Route::is('client.*'))
+            <div class="header">
+                <div class="header-left">
+                    <div class="menu-icon bi bi-list"></div>
+                    <div class="search-toggle-icon bi bi-search" data-toggle="header_search"></div>
+                </div>
+                <div class="header-right">
+                    @livewire('admin-seller-header-profile-info')
                 </div>
             </div>
-            <div class="header-right">
-                <div class="user-notification">
-                    <div class="dropdown">
-                        <a
-                            class="dropdown-toggle no-arrow"
-                            href="#"
-                            role="button"
-                            data-toggle="dropdown"
-                        >
-                            <i class="icon-copy dw dw-notification"></i>
-                            <span class="badge notification-active"></span>
-                        </a>
-                        {{-- <div class="dropdown-menu dropdown-menu-right">
-                            <div class="notification-list mx-h-350 customscroll">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <img src="/back/vendors/images/img.jpg" alt="" />
-                                            <h3>John Doe</h3>
-                                            <p>
-                                                Ce vendeur a été vérifé
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <img src="/back/vendors/images/photo1.jpg" alt="" />
-                                            <h3>Lea R. Frith</h3>
-                                            <p>
-                                                Ce vendeur a été vérifé
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <img src="/back/vendors/images/photo2.jpg" alt="" />
-                                            <h3>Erik L. Richards</h3>
-                                            <p>
-                                                Ce vendeur a été vérifé
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <img src="/back/vendors/images/photo3.jpg" alt="" />
-                                            <h3>John Doe</h3>
-                                            <p>
-                                                Ce vendeur a été vérifé
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <img src="/back/vendors/images/photo4.jpg" alt="" />
-                                            <h3>Renee I. Hansen</h3>
-                                            <p>
-                                                Ce vendeur a été vérifé
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <img src="/back/vendors/images/img.jpg" alt="" />
-                                            <h3>Vicki M. Coleman</h3>
-                                            <p>
-                                                Ce vendeur a été vérifé
-                                            </p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div> --}}
-                    </div>
-                </div>
-
-                @livewire('admin-seller-header-profile-info')
-
-			</div>
-		</div>
+        @endif
 
 
     <div class="left-side-bar">
@@ -233,6 +99,27 @@
                             ><span class="mtext">Accueil</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('admin.manage-categories') }}" class="dropdown-toggle no-arrow {{ Route::is('admin.manage-categories') ? 'active' : '' }}">
+                            <span class="micon dw dw-align-left3"></span
+                            ><span class="mtext">Gérer les catégories</span>
+                        </a>
+                    </li>
+
+                    {{-- <li>
+                        <a href="{{ route('admin.manage-sellers') }}" class="dropdown-toggle no-arrow {{ Route::is('admin.manage-sellers') ? 'active' : '' }}">
+                            <span class="micon ion ion-ios-person"></span
+                            ><span class="mtext">Gérer les vendeurs</span>
+                        </a>
+                    </li> --}}
+
+                    {{-- <li>
+                        <a href="{{ route('admin.manage-clients') }}" class="dropdown-toggle no-arrow {{ Route::is('admin.manage-sellers') ? 'active' : '' }}">
+                            <span class="micon ion ion-android-people"></span
+                            ><span class="mtext">Voir les clients</span>
+                        </a>
+                    </li> --}}
 
                     <li>
                         <a href="invoice.html" class="dropdown-toggle no-arrow">
@@ -293,17 +180,18 @@
 
                     <li>
                         <a
-								href="{{ route('seller.profile') }}"
+                                href="{{ route('seller.profile') }}"
 
-								class="dropdown-toggle no-arrow {{ Route::is('seller.profile') ? 'active' : '' }}"
-							>
-								<span class="micon fa fa-user"></span>
-								<span class="mtext"
-									>Profile
-									</span>
-							</a>
+                                class="dropdown-toggle no-arrow {{ Route::is('seller.profile') ? 'active' : '' }}"
+                            >
+                                <span class="micon fa fa-user"></span>
+                                <span class="mtext"
+                                    >Profile
+                                    </span>
+                            </a>
                         </li>
-                    @endif
+                        @endif
+
 
                     </ul>
                 </div>
@@ -319,9 +207,9 @@
                     </div>
                 </div>
 
-                <div class="footer-wrap pd-20 mb-20 card-box">
+                {{-- <div class="footer-wrap pd-20 mb-20 card-box">
                     chi haja hnaya
-                </div>
+                </div> --}}
             </div>
         </div>
         <!-- js -->

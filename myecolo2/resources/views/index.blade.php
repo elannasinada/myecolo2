@@ -54,8 +54,8 @@
                 <a class="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#forwho">Pour Qui?</a>
                 <a class="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href="#objectifs">Nos Objectifs</a>
                 <a class="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline" href= "#about">Qui sommes-nous?</a>
-                <a class="px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4" href="#">Se connecter</a>
-                <a class="px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white rounded-full md:mt-8 md:ml-4" href="#">S'inscrire</a>
+                <a class="px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4" href="{{ route('client.login') }}">Se connecter</a>
+                <a class="px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white rounded-full md:mt-8 md:ml-4" href="{{ route('client.register') }}">S'inscrire</a>
             </nav>
         </div>
     </div>
@@ -68,9 +68,9 @@
 				</h1>
 				<p data-aos="fade-down" data-aos-once="true" data-aos-delay="300" class="leading-normal text-2xl mb-8"> C'est désormais possible avec MyEcolo, votre allié éco-responsable pour une gestion intelligente des déchets alimentaires.</p>
 				<div data-aos="fade-up" data-aos-once="true" data-aos-delay="700" class="w-full md:flex items-center justify-center lg:justify-start md:space-x-5">
-					<button class="lg:mx-0 bg-yellow-500 text-white text-xl font-bold rounded-full py-4 px-9 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out">
-						Rejoignez gratuitement
-					</button>
+					<a href="{{ route('client.register') }}">
+                        <button class="lg:mx-0 bg-yellow-500 text-white text-xl font-bold rounded-full py-4 px-9 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"> Rejoignez gratuitement </button>
+                    </a>
 					<div class="flex items-center justify-center space-x-3 mt-5 md:mt-0 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out">
 						<button class="bg-white w-14 h-14 rounded-full flex items-center justify-center">
 							<svg class="w-5 h-5 ml-2" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,10 +168,14 @@
 					<div class="absolute bg-black bg-opacity-20 bottom-0 left-0 right-0 w-full h-full rounded-2xl">
 						<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
 							<h1 class="uppercase text-white font-bold text-center text-sm lg:text-xl mb-3">Vendeur ou livreur?</h1>
-                            <button class="rounded-full text-white border text-xs lg:text-md px-6 py-3 w-full font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out">
+                            <button class="rounded-full text-white text-xs lg:text-md px-6 py-3 w-full font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out" style="background: #40B93C">
                                 <a href="{{ route('seller.register') }}">Rejoindre aujourd'hui</a>
                             </button>
-                                                    </div>
+                            <br><br>
+                            <button class="rounded-full text-white border text-xs lg:text-md px-6 py-3 w-full font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out">
+                                <a href="{{ route('seller.login') }}">se connecter</a>
+                            </button>
+                        </div>
 					</div>
 				</div>
 				<div class="relative md:w-5/12">
@@ -179,8 +183,10 @@
 					<div class="absolute bg-black bg-opacity-20 bottom-0 left-0 right-0 w-full h-full rounded-2xl">
 						<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
 							<h1 class="uppercase text-white font-bold text-center text-sm lg:text-xl mb-3">Client?</h1>
-							<button class="rounded-full text-white text-xs lg:text-md px-6 py-3 w-full font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out" style="background: rgba(35, 189, 238, 0.9)">Bénéficiez de nos services</button>
-						</div>
+                            <a href="{{ route('client.login') }}">
+                                <button class="rounded-full text-white text-xs lg:text-md px-6 py-3 w-full font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out" style="background: rgba(35, 189, 238, 0.9)">Bénéficiez de nos services</button>
+                            </a>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -299,7 +305,7 @@
 		</div>
 
 	<!-- .Footer -->
-	<footer class="mt-32" style="background-color: #123411;">
+	<footer class="mt-32" style="background-color: #2F327D;">
 		<div class="max-w-lg mx-auto">
 			<div class="flex py-12 justify-center text-white items-center px-20 sm:px-36">
 				<div class="relative">

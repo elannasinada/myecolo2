@@ -1,12 +1,10 @@
-<p>Cher {{ $seller_name }}</p>
+<p>Cher {{ $client_name }}</p>
 
 <p>
-    Nous envoyons cet email pour vérifier le compte Vendeur associé avec {{ $seller_email }}
+    Nous envoyons cet email pour vérifier le compte Vendeur associé avec {{ $client_email }}
     <br>
     Vous pouvez vérifier le compte en cliquant sur le lien suivant: <br>
     <a href="{{ $actionLink }}">Vérifier le compte</a>
-    <br>
-    <b>Veuillez noter qu'il faut attendre pour que l'admin active votre compte après vérification.</b>
 </p>
 <br><br>
 <p>

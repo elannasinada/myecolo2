@@ -1,4 +1,4 @@
-Cher <b> {{ $seller->name }}</b><br>
+Cher <b> {{ $client->name }}</b><br>
 <p>
     Vous recevez cet e-mail car vous avez demandé à réinitialiser votre mot de passe sur {{ get_settings()->site_name }}
 </p>

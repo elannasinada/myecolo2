@@ -16,15 +16,14 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('username')->nullable();
             $table->string('email')->unique()->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('verified')->default(0);
             $table->string('password')->nullable();
-            $table->string('autorisation')->nullable();
             $table->string('picture')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
-
-            $table->timestamp('email_verified_at')->nullable();
-
+            $table->string('autorisation')->nullable();
             $table->enum('status', ['Pending', 'inReview', 'Active'])->default('Pending');
             $table->string('payment_method')->nullable();
             $table->string('payment_email')->nullable();

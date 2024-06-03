@@ -24,11 +24,11 @@ class Seller extends Authenticatable
         'email_verified_at',
         'verified',
         'password',
-        'autorisation',
-        'picture',	
+        'picture',
         'address',
         'phone',
         'city',
+        'autorisation',
         'status',
         'payment_method',
         'payment_email'

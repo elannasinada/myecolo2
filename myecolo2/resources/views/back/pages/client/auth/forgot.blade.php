@@ -9,7 +9,7 @@
     <h6 class="mb-20">
         Entrez votre adresse e-mail pour réinitialiser votre mot de passe
     </h6>
-    <form action="{{ route('seller.send-password-reset-link') }}" method="POST">
+    <form action="{{ route('client.send-password-reset-link') }}" method="POST">
         @csrf
         <x-alert.form-alert/>
         <div class="input-group custom">
@@ -34,7 +34,7 @@
             </div>
             <div class="col-5">
                 <div class="input-group mb-0">
-                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('seller.login') }}">Connexion</a>
+                    <a class="btn btn-outline-primary btn-lg btn-block" href="{{ route('client.login') }}">Connexion</a>
                 </div>
             </div>
         </div>

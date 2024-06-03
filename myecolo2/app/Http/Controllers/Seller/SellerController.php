@@ -334,11 +334,22 @@ class SellerController extends Controller{
             }
 
             public function changeProfilePicture(Request $request){
+
+                // if (!$request->hasFile('sellerProfilePictureFile')) {
+                //     return response()->json(['status' => 0, 'msg' => 'No file uploaded.']);
+                // }
+
+                // $file = $request->file('sellerProfilePictureFile');
+                // if (!$file->isValid()) {
+                //     return response()->json(['status' => 0, 'msg' => 'Uploaded file is not valid.']);
+                // }
+
                 $seller = Seller::findOrFail(auth('seller')->id());
                 $path = 'style_assets/img/users/sellers/';
                 $file = $request->file('sellerProfilePictureFile');
                 $old_picture = $seller->getAttributes()['picture'];
-                $filename = 'SELLER_IMG_'.$seller->id.'.jpg';
+                $file_path = $path.$old_picture;
+                $filename = 'SELLER_IMG_'.rand(2,1000).$seller->id.time().uniqid().'.jpg';
 
                 $upload = $file->move(public_path($path),$filename);
 
@@ -426,4 +437,3 @@ class SellerController extends Controller{
             // }
             // }
 }
-

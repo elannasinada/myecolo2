@@ -1,8 +1,8 @@
-<p>Cher {{ $seller->name }}</p><br>
+<p>Cher {{ $client->name }}</p><br>
 <p>
     Votre mot de passe sur {{ get_settings()->site_name }} a été modifié avec succès. Voici vos nouvelles informations de connexion :
     <br>
-    <b>Identifiant de connexion : </b> {{ $seller->email }}
+    <b>Identifiant de connexion : </b> {{ $client->email }}
     <br>
     <b>Mot de passe : </b>{{ $new_password }}
 </p>

@@ -8,5 +8,5 @@ class constGuards
 
 class constDefaults
 {
-    const tokenExpiredMinutes = 15;
+    const tokenExpiredMinutes = 60;
 }

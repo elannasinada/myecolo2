@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
+    <!-- Site favicon -->
+
+		<link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/style_assets/img/site/{{ get_settings()->site_favicon }}"
+    />
+    
     <meta charset="UTF-8">
     <title>Réinitialisation du mot de passe</title>
 </head>
