@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
             $table->string('autorisation')->nullable();
-            $table->enum('status', ['Pending', 'inReview', 'Active'])->default('Pending');
+            $table->enum('status', ['Pending', 'inActive', 'Active'])->default('Pending');
             $table->string('payment_method')->nullable();
             $table->string('payment_email')->nullable();
             $table->timestamps();

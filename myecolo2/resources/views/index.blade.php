@@ -315,7 +315,7 @@
 			</div>
 			<div class="text-center text-white">
 				<div class="py-3 tracking-wide">
-					<p>© 2024 MyEcolo Made With By EL ANNASI Nada & YOUSFI Wiame - All Rights Reserved<span class="font-semibold"></span></p>
+					<p>© 2024 MyEcolo Made By EL ANNASI Nada & YOUSFI Wiame - All Rights Reserved<span class="font-semibold"></span></p>
 				</div>
 			</div>
 		</div>

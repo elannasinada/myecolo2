@@ -6,7 +6,7 @@
       <div class="login-title">
             <h2 class="text-center text-primary">Inscription Vendeur</h2>
       </div>
-      <form action="{{ route('seller.create') }}" method="POST">
+      <form action="{{ route('seller.create') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <x-alert.form-alert/>
 

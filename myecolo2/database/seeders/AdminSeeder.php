@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
             'last_name' => 'ensias',
             'email' => 'admin@um5.ac.ma',
             'password' => Hash::make('admin'),
+            
         ]);
     }
 }

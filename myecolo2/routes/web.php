@@ -1,6 +1,11 @@
 <?php
 
+namespace App\Http\Controllers\Client;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\ClientController;
+
+
 use App\Http\Controllers\FrontEndController;
 
 /*
@@ -18,6 +23,11 @@ Route::get('/', function () {
     return view('index');
 });
 
+// Route::controller(FrontEndController::class)->group(function(){
+//     Route::get('/','homePage')->name('home-page');
+// });
+
 Route::view('/example-page', 'example-page');
 Route::view('/example-auth', 'example-auth');
+
 Route::view('example-frontend','example-frontend');

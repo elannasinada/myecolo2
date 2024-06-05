@@ -1,9 +1,18 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+
+
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Models\SellersControl;
+use App\Models\Categories;
+
 use App\Models\Admin;
+use App\Http\Controllers\Admin\SellersController;
+use App\Http\Controllers\Admin\ClientsController;
+
 
 
 Route::prefix('admin')->name('admin.')->group(function(){
@@ -26,7 +35,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/change-logo',[AdminController::class,'changeLogo'])->name('change-logo');
         Route::post('/change-favicon',[AdminController::class,'changeFavicon'])->name('change-favicon');
 
-        // CATEGORIES AND SUB CATEGORIES MANAGEMENT
+        // CATEGORIES MANAGEMENT
         Route::get('/manage-categories', [CategoriesController::class, 'catList'])->name('manage-categories');
 
         Route::prefix('manage-categories')->name('manage-categories.')->group(function() {
@@ -37,5 +46,19 @@ Route::prefix('admin')->name('admin.')->group(function(){
                 Route::post('/update-category','updateCategory')->name('update-category');
             });
         });
+
+
+        //Sellers Management
+        Route::get('/manage-sellers', [SellersController::class, 'showPendingSellers'])->name('manage-sellers');
+
+        Route::prefix('manage-sellers')->name('manage-sellers.')->group(function() {
+            Route::controller(SellersController::class)->group(function() {
+                Route::patch('/update-seller-status/{id}', 'updateSellerStatus')->name('update-seller-status');
+            });
+        });
+
+         // Clients Management
+        Route::get('/manage-clients', [ClientsController::class, 'showAllClients'])->name('manage-clients');
     });
+
 });

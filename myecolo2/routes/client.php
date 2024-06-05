@@ -24,12 +24,14 @@ Route::prefix('client')->name('client.')->group(function(){
    });
 
    Route::middleware(['auth:client','PreventBackHistory'])->group(function(){
-
        Route::controller(ClientController::class)->group(function(){
-          Route::get('/','home')->name('home');
+          Route::get('/','home')->name('home'); // this one is the home page that leads to products and stuff
           Route::post('/logout','logoutHandler')->name('logout');
           Route::get('/profile','profileView')->name('profile');
           Route::post('/change-profile-picture','changeProfilePicture')->name('change-profile-picture');
+          Route::get('/shop', 'shop')->name('shop');
+          Route::get('/cart','cart')->name('cart');
+          Route::get('/product/{id}','product')->name('product');
        });
     }
 );

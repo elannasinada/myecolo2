@@ -50,13 +50,13 @@ class AdminCategoriesList extends Component
 
     public function deleteCategory($category_id){
         $category = Category::findOrFail($category_id);
-        $path = 'images/categories/';
-        $category_image = $category->category_image;
+        // $path = 'images/categories/';
+        // $category_image = $category->category_image;
 
-        //DELETE CATEGORY IMAGE
-        if( File::exists(public_path($path.$category_image)) ){
-            File::delete($path.$category_image);
-        }
+        // //DELETE CATEGORY IMAGE
+        // if( File::exists(public_path($path.$category_image)) ){
+        //     File::delete($path.$category_image);
+        // }
 
         //DELETE CATEGORY FROM DB
         $delete = $category->delete();

@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 use App\Models\GeneralSetting;
 use App\Models\SocialNetwork;
 use App\Models\Category;
-use App\Models\SubCategory;
+use App\Models\Product;
 
 if(!function_exists('sendEmail')) {
     function sendEmail($mailConfig) {
@@ -84,11 +84,23 @@ if( !function_exists('get_social_network') ){
     }
 }
 
-// //FRONTEND::
-// /** GET FRONT END CATEGORIES */
-// if( !function_exists('get_categories') ){
-//     function get_categories(){
-//         $categories = Category::with('subcategories')->orderBy('ordering','asc')->get();
-//         return !empty($categories) ? $categories : [];
-//     }
-// }
+
+//FRONTEND::
+/** GET FRONT END CATEGORIES */
+if (!function_exists('get_categories')) {
+    function get_categories()
+    {
+        $categories = Category::orderBy('ordering', 'asc')->get();
+        return !empty($categories) ? $categories : [];
+    }
+}
+
+
+/** GET FRONT END CATEGORIES */
+if (!function_exists('get_products')) {
+    function get_products()
+    {
+        $products = Product::get();
+        return !empty($products) ? $products : [];
+    }
+}

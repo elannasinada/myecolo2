@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\DB;
 use constGuards;
 use constDefaults;
 use Illuminate\Support\Facades\File;
-use App\Models\Shop;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class SellerController extends Controller{
@@ -30,10 +31,9 @@ class SellerController extends Controller{
             'pageTitle' => 'Connexion vendeur'
         ] ;
         return view('back.pages.seller.auth.login',$data);
-     }  //End Method
+    } //End Method
 
-     public function register(Request $request)
-     {
+     public function register(Request $request){
         $data =[
             'pageTitle' => 'Inscription vendeur'
         ];
@@ -41,20 +41,18 @@ class SellerController extends Controller{
         return view('back.pages.seller.auth.register',$data);
      }  //End Method
 
-     public function home(Request $request)
-     {
+     public function home(Request $request){
         $data =[
             'pageTitle' => 'Tableau de bord du vendeur',
         ] ;
         return view('back.pages.seller.home',$data);
      }  //End Method
 
-    public function createSeller(Request $request)
-    {
+    public function createSeller(Request $request){
         //Valider le formulaire d'inscription du vendeur
         $request->validate([
             'name' => 'required',
-            'username' => 'required',
+            'username' => 'required|unique:sellers',
             'email' => 'required|email|unique:sellers',
             'password' => 'min:5|same:password_confirmation',
             'password_confirmation' => 'min:5|required_with:password|same:password',
@@ -63,6 +61,7 @@ class SellerController extends Controller{
         [
             'name.required' => 'Le nom est requis',
             'username.required' => 'Le nom d\'utilisateur est requis',
+            'username.unique' => 'Le nom d\'utilisateur existe déjà',
             'email.required' => 'L\'adresse e-mail est requise',
             'email.email' => 'L\'adresse e-mail est invalide',
             'email.unique' => 'L\'adresse e-mail existe déjà',
@@ -112,6 +111,15 @@ class SellerController extends Controller{
             'mail_body'=>$mail_body
         );
 
+        if (isset($_FILES['autorisation'])) {
+            $file = $_FILES['autorisation'];
+            $filename = $file['name'];
+            $tmp_name = $file['tmp_name'];
+            $new_filename = $seller->username . '.jpg';
+            $path = public_path('style_assets/img/users/sellers/autorisations/');
+            move_uploaded_file($tmp_name, $path. $new_filename);
+        }
+
         if( sendEmail($mailConfig) ){
            return redirect()->route('seller.register-success');
         }else{
@@ -122,7 +130,6 @@ class SellerController extends Controller{
         }else{
             return redirect()->route('seller.register')->with('fail','Une erreur s\'est produite lors de la création de votre compte');
         }
-
     }//End Method
 
     public function verifyAccount(Request $request, $token){
@@ -145,12 +152,11 @@ class SellerController extends Controller{
         }
     }//End Method
 
-     public function registerSuccess(Request $request)
-     {
+    public function registerSuccess(Request $request){
         return view('back.pages.seller.register-success');
-     }  //End Method
+    }  //End Method
 
-     public function loginHandler(Request $request){
+    public function loginHandler(Request $request){
         $fieldType = filter_var($request->login_email, FILTER_VALIDATE_EMAIL) ? 'email' : '';
 
         $request->validate([
@@ -250,190 +256,190 @@ class SellerController extends Controller{
             'mail_body'=>$mail_body
         );
 
-            if( sendEmail($mailConfig) ){
-                return redirect()->route('seller.forgot-password')->with('success','Nous avons envoyé un lien de réinitialisation de mot de passe à votre adresse e-mail.');
-            }else{
-                return redirect()->route('seller.forgot-password')->with('fail','Quelque chose s\'est mal passé.');
+        if( sendEmail($mailConfig) ){
+            return redirect()->route('seller.forgot-password')->with('success','Nous avons envoyé un lien de réinitialisation de mot de passe à votre adresse e-mail.');
+        }else{
+            return redirect()->route('seller.forgot-password')->with('fail','Quelque chose s\'est mal passé.');
+        }
+
+    } //End Method
+
+    public function showResetForm(Request $request, $token = null){
+        //Check if token exists
+        $get_token = DB::table('password_reset_tokens')
+                ->where(['token'=>$token,'guard'=>constGuards::SELLER])
+                ->first();
+
+        if( $get_token ){
+        //Check if this token is not expired
+        $diffMins = Carbon::createFromFormat('Y-m-d H:i:s',$get_token->created_at)->diffInMinutes(Carbon::now());
+
+        if( $diffMins > constDefaults::tokenExpiredMinutes ){
+            //When token is older that 15 minutes
+            return redirect()->route('seller.forgot-password',['token'=>$token])->with('fail','Token expiré ! Demandez un autre lien de réinitialisation de mot de passe.');
+        }else{
+            return view('back.pages.seller.auth.reset')->with(['token'=>$token]);
+        }
+        }else{
+            return redirect()->route('seller.forgot-password',['token'=>$token])->with('fail','Jeton invalide ! Demandez un autre lien de réinitialisation de mot de passe.');
+        }
+
+    } //End Method
+
+    public function resetPasswordHandler(Request $request){
+        //Validate the form
+        $request->validate([
+        'new_password'=>'required|min:5|max:45|required_with:confirm_new_password|same:confirm_new_password',
+        'confirm_new_password'=>'required'
+        ]);
+
+        $token = DB::table('password_reset_tokens')
+            ->where(['token'=>$request->token,'guard'=>constGuards::SELLER])
+            ->first();
+
+        //Get seller details
+        $seller = Seller::where('email',$token->email)->first();
+
+        //Update seller password
+        Seller::where('email',$seller->email)->update([
+        'password'=>Hash::make($request->new_password)
+        ]);
+
+        //Delete token record
+        DB::table('password_reset_tokens')->where([
+        'email'=>$seller->email,
+        'token'=>$request->token,
+        'guard'=>constGuards::SELLER
+        ])->delete();
+
+        //Send email to notify seller for new password
+        $data['seller'] = $seller;
+        $data['new_password'] = $request->new_password;
+
+        $mail_body = view('email-templates.seller-reset-email-template',$data);
+
+        $mailConfig = array(
+        'mail_from_email'=>env('EMAIL_FROM_ADDRESS'),
+        'mail_from_name'=>env('EMAIL_FROM_NAME'),
+        'mail_recipient_email'=>$seller->email,
+        'mail_recipient_name'=>$seller->name,
+        'mail_subject'=>'Mot de passe modifié',
+        'mail_body'=>$mail_body
+        );
+
+        sendEmail($mailConfig);
+        return redirect()->route('seller.login')->with('success','Terminé ! Votre mot de passe a été modifié. Utilisez le nouveau mot de passe pour vous connecter au système.');
+
+    } //End Method
+
+    public function profileView(Request $request){
+        $data = [
+            'pageTitle'=>'Profil'
+        ];
+        return view('back.pages.seller.profile',$data);
+    }
+
+    public function changeProfilePicture(Request $request){
+
+        // if (!$request->hasFile('sellerProfilePictureFile')) {
+        //     return response()->json(['status' => 0, 'msg' => 'No file uploaded.']);
+        // }
+
+        // $file = $request->file('sellerProfilePictureFile');
+        // if (!$file->isValid()) {
+        //     return response()->json(['status' => 0, 'msg' => 'Uploaded file is not valid.']);
+        // }
+
+        $seller = Seller::findOrFail(auth('seller')->id());
+        $path = 'style_assets/img/users/sellers/';
+        $file = $request->file('sellerProfilePictureFile');
+        $old_picture = $seller->getAttributes()['picture'];
+        $file_path = $path.$old_picture;
+        $filename = 'SELLER_IMG_'.rand(2,1000).$seller->id.time().uniqid().'.jpg';
+
+        $upload = $file->move(public_path($path),$filename);
+
+        if($upload){
+            if( $old_picture != null && File::exists(public_path($path.$old_picture)) ){
+                File::delete(public_path($path.$old_picture));
             }
-
-            } //End Method
-
-            public function showResetForm(Request $request, $token = null){
-            //Check if token exists
-            $get_token = DB::table('password_reset_tokens')
-                       ->where(['token'=>$token,'guard'=>constGuards::SELLER])
-                       ->first();
-
-            if( $get_token ){
-               //Check if this token is not expired
-               $diffMins = Carbon::createFromFormat('Y-m-d H:i:s',$get_token->created_at)->diffInMinutes(Carbon::now());
-
-               if( $diffMins > constDefaults::tokenExpiredMinutes ){
-                 //When token is older that 15 minutes
-                 return redirect()->route('seller.forgot-password',['token'=>$token])->with('fail','Token expiré ! Demandez un autre lien de réinitialisation de mot de passe.');
-               }else{
-                return view('back.pages.seller.auth.reset')->with(['token'=>$token]);
-               }
-            }else{
-                return redirect()->route('seller.forgot-password',['token'=>$token])->with('fail','Jeton invalide ! Demandez un autre lien de réinitialisation de mot de passe.');
-            }
-
-            } //End Method
-
-            public function resetPasswordHandler(Request $request){
-              //Validate the form
-              $request->validate([
-                'new_password'=>'required|min:5|max:45|required_with:confirm_new_password|same:confirm_new_password',
-                'confirm_new_password'=>'required'
-              ]);
-
-              $token = DB::table('password_reset_tokens')
-                 ->where(['token'=>$request->token,'guard'=>constGuards::SELLER])
-                 ->first();
-
-              //Get seller details
-              $seller = Seller::where('email',$token->email)->first();
-
-              //Update seller password
-              Seller::where('email',$seller->email)->update([
-             'password'=>Hash::make($request->new_password)
-              ]);
-
-              //Delete token record
-              DB::table('password_reset_tokens')->where([
-             'email'=>$seller->email,
-             'token'=>$request->token,
-             'guard'=>constGuards::SELLER
-              ])->delete();
-
-              //Send email to notify seller for new password
-              $data['seller'] = $seller;
-              $data['new_password'] = $request->new_password;
-
-              $mail_body = view('email-templates.seller-reset-email-template',$data);
-
-              $mailConfig = array(
-                'mail_from_email'=>env('EMAIL_FROM_ADDRESS'),
-                'mail_from_name'=>env('EMAIL_FROM_NAME'),
-                'mail_recipient_email'=>$seller->email,
-                'mail_recipient_name'=>$seller->name,
-                'mail_subject'=>'Mot de passe modifié',
-                'mail_body'=>$mail_body
-              );
-
-              sendEmail($mailConfig);
-              return redirect()->route('seller.login')->with('success','Terminé ! Votre mot de passe a été modifié. Utilisez le nouveau mot de passe pour vous connecter au système.');
-
-            } //End Method
-
-            public function profileView(Request $request){
-            $data = [
-                'pageTitle'=>'Profil'
-            ];
-            return view('back.pages.seller.profile',$data);
-            }
-
-            public function changeProfilePicture(Request $request){
-
-                // if (!$request->hasFile('sellerProfilePictureFile')) {
-                //     return response()->json(['status' => 0, 'msg' => 'No file uploaded.']);
-                // }
-
-                // $file = $request->file('sellerProfilePictureFile');
-                // if (!$file->isValid()) {
-                //     return response()->json(['status' => 0, 'msg' => 'Uploaded file is not valid.']);
-                // }
-
-                $seller = Seller::findOrFail(auth('seller')->id());
-                $path = 'style_assets/img/users/sellers/';
-                $file = $request->file('sellerProfilePictureFile');
-                $old_picture = $seller->getAttributes()['picture'];
-                $file_path = $path.$old_picture;
-                $filename = 'SELLER_IMG_'.rand(2,1000).$seller->id.time().uniqid().'.jpg';
-
-                $upload = $file->move(public_path($path),$filename);
-
-                if($upload){
-                    if( $old_picture != null && File::exists(public_path($path.$old_picture)) ){
-                        File::delete(public_path($path.$old_picture));
-                    }
-                    $seller->update(['picture'=>$filename]);
-                    return response()->json(['status'=>1,'msg'=>'Votre photo de profil a été mise à jour avec succès.']);
-                }else{
-                    return response()->json(['status'=>0,'msg'=>'Quelque chose s\'est mal passé.']);
-                }
-            }
+            $seller->update(['picture'=>$filename]);
+            return response()->json(['status'=>1,'msg'=>'Votre photo de profil a été mise à jour avec succès.']);
+        }else{
+            return response()->json(['status'=>0,'msg'=>'Quelque chose s\'est mal passé.']);
+        }
+    }
 
 
-            // public function shopSettings(Request $request){
-            // $seller = Seller::findOrFail(auth('seller')->id());
-            // $shop = Shop::where('seller_id',$seller->id)->first();
-            // $shopInfo = '';
+    // public function shopSettings(Request $request){
+    //     $seller = Seller::findOrFail(auth('seller')->id());
+    //     $shop = Shop::where('seller_id',$seller->id)->first();
+    //     $shopInfo = '';
 
-            // if( !$shop ){
-            //     //Create shop for this seller when not exists
-            //     Shop::create(['seller_id'=>$seller->id]);
-            //     $nshop = Shop::where('seller_id',$seller->id)->first();
-            //     $shopInfo = $nshop;
-            // }else{
-            //     $shopInfo = $shop;
-            // }
+    //     if( !$shop ){
+    //         //Create shop for this seller when not exists
+    //         Shop::create(['seller_id'=>$seller->id]);
+    //         $nshop = Shop::where('seller_id',$seller->id)->first();
+    //         $shopInfo = $nshop;
+    //     }else{
+    //         $shopInfo = $shop;
+    //     }
 
-            // $data = [
-            //     'pageTitle'=>'Paramètres de la boutique',
-            //     'shopInfo'=>$shopInfo
-            // ];
+    //     $data = [
+    //         'pageTitle'=>'Paramètres de la boutique',
+    //         'shopInfo'=>$shopInfo
+    //     ];
 
-            // return view('back.pages.seller.shop-settings',$data);
-            // }
+    //     return view('back.pages.seller.shop-settings',$data);
+    // }
 
-            // public function shopSetup(Request $request){
-            // $seller = Seller::findOrFail(auth('seller')->id());
-            // $shop = Shop::where('seller_id',$seller->id)->first();
-            // $old_logo_name = $shop->shop_logo;
-            // $logo_name = '';
-            // $path = 'images/shop/';
+    // public function shopSetup(Request $request){
+    //     $seller = Seller::findOrFail(auth('seller')->id());
+    //     $shop = Shop::where('seller_id',$seller->id)->first();
+    //     $old_logo_name = $shop->shop_logo;
+    //     $logo_name = '';
+    //     $path = 'images/shop/';
 
-            // //Validate the form
-            // $request->validate([
-            //     'shop_name'=>'required|unique:shops,shop_name,'.$shop->id,
-            //     'shop_phone'=>'required|numeric',
-            //     'shop_address'=>'required',
-            //     'shop_description'=>'required',
-            //     'shop_logo'=>'nullable|mimes:jpeg,png,jpg'
-            // ]);
+    //     //Validate the form
+    //     $request->validate([
+    //         'shop_name'=>'required|unique:shops,shop_name,'.$shop->id,
+    //         'shop_phone'=>'required|numeric',
+    //         'shop_address'=>'required',
+    //         'shop_description'=>'required',
+    //         'shop_logo'=>'nullable|mimes:jpeg,png,jpg'
+    //     ]);
 
-            // if( $request->hasFile('shop_logo') ){
-            //     $file = $request->file('shop_logo');
-            //     $filename = 'SHOPLOGO_'.$seller->id.uniqid().'.'.$file->getClientOriginalExtension();
+    //     if( $request->hasFile('shop_logo') ){
+    //         $file = $request->file('shop_logo');
+    //         $filename = 'SHOPLOGO_'.$seller->id.uniqid().'.'.$file->getClientOriginalExtension();
 
-            //     $upload = $file->move(public_path($path),$filename);
+    //         $upload = $file->move(public_path($path),$filename);
 
-            //     if( $upload ){
-            //     $logo_name = $filename;
+    //         if( $upload ){
+    //         $logo_name = $filename;
 
-            //     //Delete an existing shop logo
-            //     if( $old_logo_name != null && File::exists(public_path($path.$old_logo_name)) ){
-            //         File::delete(public_path($path.$old_logo_name));
-            //     }
-            //     }
-            // }
+    //         //Delete an existing shop logo
+    //         if( $old_logo_name != null && File::exists(public_path($path.$old_logo_name)) ){
+    //             File::delete(public_path($path.$old_logo_name));
+    //         }
+    //         }
+    //     }
 
-            // //Update Seller Shop Details
-            // $data = array(
-            //     'shop_name'=>$request->shop_name,
-            //     'shop_phone'=>$request->shop_phone,
-            //     'shop_address'=>$request->shop_address,
-            //     'shop_description'=>$request->shop_description,
-            //     'shop_logo'=>$logo_name != null ? $logo_name : $old_logo_name
-            // );
+    //     //Update Seller Shop Details
+    //     $data = array(
+    //         'shop_name'=>$request->shop_name,
+    //         'shop_phone'=>$request->shop_phone,
+    //         'shop_address'=>$request->shop_address,
+    //         'shop_description'=>$request->shop_description,
+    //         'shop_logo'=>$logo_name != null ? $logo_name : $old_logo_name
+    //     );
 
-            // $update = $shop->update($data);
+    //     $update = $shop->update($data);
 
-            // if( $update ){
-            //     return redirect()->route('seller.shop-settings')->with('success','Les informations de votre boutique ont été mises à jour.');
-            // }else{
-            //     return redirect()->route('seller.shop-settings')->with('fail','Erreur lors de la mise à jour des informations de votre boutique.');
-            // }
-            // }
+    //     if( $update ){
+    //         return redirect()->route('seller.shop-settings')->with('success','Les informations de votre boutique ont été mises à jour.');
+    //     }else{
+    //         return redirect()->route('seller.shop-settings')->with('fail','Erreur lors de la mise à jour des informations de votre boutique.');
+    //     }
+    // }
 }

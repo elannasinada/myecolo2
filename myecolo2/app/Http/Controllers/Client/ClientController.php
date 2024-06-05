@@ -30,8 +30,7 @@ class ClientController extends Controller{
         return view('back.pages.client.auth.login',$data);
      }  //End Method
 
-     public function register(Request $request)
-     {
+     public function register(Request $request){
         $data =[
             'pageTitle' => 'Inscription client'
         ];
@@ -39,16 +38,28 @@ class ClientController extends Controller{
         return view('back.pages.client.auth.register',$data);
      }  //End Method
 
-     public function home(Request $request)
-     {
+     public function home(Request $request){
         $data =[
             'pageTitle' => 'MyEcolo - Acceuil',
-        ] ;
-        return view('back.pages.client.home',$data);
+        ];
+        return view('front.pages.home',$data);
      }  //End Method
 
-    public function createClient(Request $request)
-    {
+     public function shop(Request $request){
+        $data =[
+            'pageTitle' => 'MyEcolo - Boutique',
+        ];
+        return view('front.pages.shop',$data);
+     }  //End Method
+
+     public function cart(Request $request){
+        $data =[
+            'pageTitle' => 'MyEcolo - Panier',
+        ];
+        return view('front.pages.cart',$data);
+     }  //End Method
+
+    public function createClient(Request $request){
         //Valider le formulaire d'inscription du vendeur
         $request->validate([
             'name' => 'required',
@@ -140,8 +151,7 @@ class ClientController extends Controller{
         }
     }//End Method
 
-     public function registerSuccess(Request $request)
-     {
+     public function registerSuccess(Request $request){
         return view('back.pages.client.register-success');
      }  //End Method
 

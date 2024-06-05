@@ -12,7 +12,7 @@ var options = {
 		height: 100,
 		width: 70,
 		type: 'radialBar',
-	},	
+	},
 	plotOptions: {
 		radialBar: {
 			hollow: {
@@ -82,7 +82,7 @@ var options2 = {
 		height: 100,
 		width: 70,
 		type: 'radialBar',
-	},	
+	},
 	plotOptions: {
 		radialBar: {
 			hollow: {
@@ -152,7 +152,7 @@ var options3 = {
 		height: 100,
 		width: 70,
 		type: 'radialBar',
-	},	
+	},
 	plotOptions: {
 		radialBar: {
 			hollow: {
@@ -222,7 +222,7 @@ var options4 = {
 		height: 100,
 		width: 70,
 		type: 'radialBar',
-	},	
+	},
 	plotOptions: {
 		radialBar: {
 			hollow: {
@@ -279,100 +279,100 @@ var options4 = {
 };
 
 var options5 = {
-	chart: {
-		height: 350,
-		type: 'bar',
-		parentHeightOffset: 0,
-		fontFamily: 'Poppins, sans-serif',
-		toolbar: {
-			show: false,
-		},
-	},
-	colors: ['#1b00ff', '#f56767'],
-	grid: {
-		borderColor: '#c7d2dd',
-		strokeDashArray: 5,
-	},
-	plotOptions: {
-		bar: {
-			horizontal: false,
-			columnWidth: '25%',
-			endingShape: 'rounded'
-		},
-	},
-	dataLabels: {
-		enabled: false
-	},
-	stroke: {
-		show: true,
-		width: 2,
-		colors: ['transparent']
-	},
-	series: [{
-		name: 'In Progress',
-		data: [40, 28, 47, 22, 34, 25]
-	}, {
-		name: 'Complete',
-		data: [30, 20, 37, 10, 28, 11]
-	}],
-	xaxis: {
-		categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-		labels: {
-			style: {
-				colors: ['#353535'],
-				fontSize: '16px',
-			},
-		},
-		axisBorder: {
-			color: '#8fa6bc',
-		}
-	},
-	yaxis: {
-		title: {
-			text: ''
-		},
-		labels: {
-			style: {
-				colors: '#353535',
-				fontSize: '16px',
-			},
-		},
-		axisBorder: {
-			color: '#f00',
-		}
-	},
-	legend: {
-		horizontalAlign: 'right',
-		position: 'top',
-		fontSize: '16px',
-		offsetY: 0,
-		labels: {
-			colors: '#353535',
-		},
-		markers: {
-			width: 10,
-			height: 10,
-			radius: 15,
-		},
-		itemMargin: {
-			vertical: 0
-		},
-	},
-	fill: {
-		opacity: 1
+    chart: {
+        height: 350,
+        type: 'bar',
+        parentHeightOffset: 0,
+        fontFamily: 'Poppins, sans-serif',
+        toolbar: {
+            show: false,
+        },
+    },
+    colors: ['#1b00ff', '#f56767'],
+    grid: {
+        borderColor: '#c7d2dd',
+        strokeDashArray: 5,
+    },
+    plotOptions: {
+        bar: {
+            horizontal: false,
+            columnWidth: '25%',
+            endingShape: 'rounded'
+        },
+    },
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+    },
+    series: [{
+        name: 'Nouveaux produits',
+        data: [40, 28, 47, 22, 34, 25]
+    }, {
+        name: 'Commandes',
+        data: [30, 20, 37, 10, 28, 11]
+    }],
+    xaxis: {
+        categories: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+        labels: {
+            style: {
+                colors: ['#353535'],
+                fontSize: '16px',
+            },
+        },
+        axisBorder: {
+            color: '#8fa6bc',
+        }
+    },
+    yaxis: {
+        title: {
+            text: ''
+        },
+        labels: {
+            style: {
+                colors: '#353535',
+                fontSize: '16px',
+            },
+        },
+        axisBorder: {
+            color: '#f00',
+        }
+    },
+    legend: {
+        horizontalAlign: 'right',
+        position: 'top',
+        fontSize: '16px',
+        offsetY: 0,
+        labels: {
+            colors: '#353535',
+        },
+        markers: {
+            width: 10,
+            height: 10,
+            radius: 15,
+        },
+        itemMargin: {
+            vertical: 0
+        },
+    },
+    fill: {
+        opacity: 1
 
-	},
-	tooltip: {
-		style: {
-			fontSize: '15px',
-			fontFamily: 'Poppins, sans-serif',
-		},
-		y: {
-			formatter: function (val) {
-				return val
-			}
-		}
-	}
+    },
+    tooltip: {
+        style: {
+            fontSize: '15px',
+            fontFamily: 'Poppins, sans-serif',
+        },
+        y: {
+            formatter: function (val) {
+                return val
+            }
+        }
+    }
 }
 
 var options6 = {
@@ -460,7 +460,7 @@ $('document').ready(function(){
 			searchPlaceholder: "Search",
 			paginate: {
 				next: '<i class="ion-chevron-right"></i>',
-				previous: '<i class="ion-chevron-left"></i>'  
+				previous: '<i class="ion-chevron-left"></i>'
 			}
 		},
 	});
